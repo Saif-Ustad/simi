@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../common/widgets/app_main_button.dart';
 import '../../../common/widgets/onboarding/onboarding_progress_dots.dart';
 import '../../../core/config/theme/app_colors.dart';
 import '../../../core/config/theme/app_spacing.dart';
@@ -151,11 +152,10 @@ class _ProfilePhotosScreenState extends State<ProfilePhotosScreen> {
                           Text(
                             'Faces of Love',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
+                            style: AppTextTheme.headlineMedium.copyWith(
                               color: AppColors.textPrimary,
-                              height: 1.3,
+                              fontWeight: FontWeight.w600,
+                              height: 1.2,
                             ),
                           ),
 
@@ -170,9 +170,8 @@ class _ProfilePhotosScreenState extends State<ProfilePhotosScreen> {
                                 'avatars in the journal.',
                             textAlign: TextAlign.center,
                             style: AppTextTheme.bodyMedium.copyWith(
-                              fontSize: 12,
                               color: AppColors.textSecondary,
-                              height: 1.45,
+                              height: 1.4,
                             ),
                           ),
 
@@ -223,36 +222,12 @@ class _ProfilePhotosScreenState extends State<ProfilePhotosScreen> {
                           // ----------------------------------------------
                           // CONTINUE BUTTON
                           // ----------------------------------------------
-                          SizedBox(
-                            width: double.infinity,
+
+                          AppMainButton(
+                            text: 'Continue',
+                            onPressed: _handleContinue,
                             height: 48,
-                            child: ElevatedButton(
-                              onPressed: _handleContinue,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary,
-                                foregroundColor: AppColors.onPrimary,
-                                elevation: 3,
-                                shadowColor:
-                                Colors.black.withValues(alpha: 0.08),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Continue',
-                                    style:
-                                    AppTextTheme.labelLarge.copyWith(
-                                      color: AppColors.onPrimary,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            borderRadius: 6,
                           ),
 
                           const SizedBox(height: 17),

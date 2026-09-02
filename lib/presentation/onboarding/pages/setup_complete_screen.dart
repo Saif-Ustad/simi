@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../common/widgets/app_main_button.dart';
 import '../../../core/config/theme/app_colors.dart';
 import '../../../core/config/theme/app_spacing.dart';
+import '../../../core/config/theme/app_text_theme.dart';
 
 class SetupCompleteScreen extends StatelessWidget {
   const SetupCompleteScreen({
@@ -131,12 +133,10 @@ class SetupCompleteScreen extends StatelessWidget {
                         Text(
                           'Setup Complete',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.playfairDisplay(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
+                          style: AppTextTheme.displayLarge.copyWith(
                             color: AppColors.textPrimary,
+                            fontWeight: FontWeight.w600,
                             height: 1.2,
-                            letterSpacing: -0.6,
                           ),
                         ),
 
@@ -151,11 +151,9 @@ class SetupCompleteScreen extends StatelessWidget {
                               'private space designed just for\n'
                               'the two of you.',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
+                          style: AppTextTheme.bodyMedium.copyWith(
                             color: AppColors.textSecondary,
-                            height: 1.55,
+                            height: 1.4,
                           ),
                         ),
                       ],
@@ -166,41 +164,11 @@ class SetupCompleteScreen extends StatelessWidget {
                   // ENTER HOME BUTTON
                   // =====================================================
 
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: AppSpacing.sm,
-                    ),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 56,
-                      child: ElevatedButton(
-                        onPressed: onEnterHome,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: AppColors.onPrimary,
-                          elevation: 4,
-                          shadowColor: Colors.black.withValues(
-                            alpha: 0.08,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(28),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Enter Home',
-                              style: GoogleFonts.inter(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.onPrimary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  AppMainButton(
+                    text: 'Enter Home',
+                    onPressed: () {},
+                    height: 48,
+                    borderRadius: 6,
                   ),
                 ],
               ),

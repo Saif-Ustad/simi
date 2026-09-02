@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../common/widgets/app_main_button.dart';
 import '../../../common/widgets/onboarding/onboarding_progress_dots.dart';
 import '../../../core/config/theme/app_colors.dart';
 import '../../../core/config/theme/app_spacing.dart';
+import '../../../core/config/theme/app_text_theme.dart';
 import 'confirm_pin_screen.dart';
 import 'create_pin_screen.dart';
 
@@ -164,22 +166,21 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
                     Text(
                       'Create New PIN',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.playfairDisplay(
-                        fontSize: 24,
+                      style: AppTextTheme.headlineMedium.copyWith(
+                        color: AppColors.textPrimary,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.primary,
+                        height: 1.2,
                       ),
                     ),
 
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 8),
 
                     Text(
                       'Account verified. Please enter a new 4-\ndigit PIN to secure your vault.',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        height: 1.45,
+                      style: AppTextTheme.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
+                        height: 1.4,
                       ),
                     ),
 
@@ -223,37 +224,16 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
                 AppSpacing.lg,
                 AppSpacing.lg,
               ),
-              child: SizedBox(
-                width: double.infinity,
+              child: AppMainButton(
+                text: 'Set New PIN',
+                onPressed:
+                createdPin != null &&
+                    confirmedPin != null &&
+                    createdPin == confirmedPin
+                    ? widget.onSet
+                    : null,
                 height: 48,
-                child: ElevatedButton(
-                  onPressed:
-                  createdPin != null &&
-                      confirmedPin != null &&
-                      createdPin == confirmedPin
-                      ? widget.onSet
-                      : null,
-
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    disabledBackgroundColor:
-                    AppColors.primaryContainer.withValues(
-                      alpha: 0.65,
-                    ),
-                    foregroundColor: AppColors.onPrimary,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                  ),
-                  child:  Text(
-                    'Set New PIN',
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
+                borderRadius: 6,
               ),
             ),
           ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../common/widgets/app_main_button.dart';
 import '../../../common/widgets/onboarding/onboarding_progress_dots.dart';
 import '../../../core/config/theme/app_colors.dart';
 import '../../../core/config/theme/app_spacing.dart';
@@ -67,7 +68,7 @@ class BiometricScreen extends StatelessWidget {
                   // Skip
                   Positioned(
                     right: 16,
-                    top: 10,
+                    top: 12,
                     child: TextButton(
                       onPressed: onSkip,
                       style: TextButton.styleFrom(
@@ -116,15 +117,14 @@ class BiometricScreen extends StatelessWidget {
                     Text(
                       'Faster, Secure Access',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.playfairDisplay(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                      style: AppTextTheme.headlineMedium.copyWith(
                         color: AppColors.textPrimary,
-                        height: 1.3,
+                        fontWeight: FontWeight.w600,
+                        height: 1.2,
                       ),
                     ),
 
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
 
                     // -------------------------------------------------
                     // DESCRIPTION
@@ -135,11 +135,9 @@ class BiometricScreen extends StatelessWidget {
                           'sanctuary. Your memories,\n'
                           'beautifully protected.',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                      style: AppTextTheme.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
-                        height: 1.5,
+                        height: 1.4,
                       ),
                     ),
 
@@ -148,31 +146,12 @@ class BiometricScreen extends StatelessWidget {
                     // -------------------------------------------------
                     // SET BIOMETRIC BUTTON
                     // -------------------------------------------------
-                    SizedBox(
-                      width: double.infinity,
+
+                    AppMainButton(
+                      text: 'Set Biometric',
+                      onPressed: onSetBiometric,
                       height: 48,
-                      child: ElevatedButton(
-                        onPressed: onSetBiometric,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: AppColors.onPrimary,
-                          elevation: 2,
-                          shadowColor: Colors.black.withValues(
-                            alpha: 0.08,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
-                          ),
-                        ),
-                        child: Text(
-                          'Set Biometric',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.onPrimary,
-                          ),
-                        ),
-                      ),
+                      borderRadius: 6,
                     ),
 
                     const SizedBox(height: 12),

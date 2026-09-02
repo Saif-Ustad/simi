@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/widgets/app_main_button.dart';
 import '../../../common/widgets/onboarding/onboarding_progress_dots.dart';
 import '../../../core/config/theme/app_colors.dart';
 import '../../../core/config/theme/app_spacing.dart';
@@ -241,30 +242,12 @@ class _PartnerNamesScreenState extends State<PartnerNamesScreen> {
                           // ------------------------------------------------
                           // CONTINUE BUTTON
                           // ------------------------------------------------
-                          SizedBox(
-                            width: double.infinity,
+
+                          AppMainButton(
+                            text: 'Continue',
+                            onPressed: widget.onContinue,
                             height: 48,
-                            child: ElevatedButton(
-                              onPressed: widget.onContinue,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary,
-                                foregroundColor: AppColors.onPrimary,
-                                elevation: 3,
-                                shadowColor: Colors.black.withValues(
-                                  alpha: 0.08,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                              ),
-                              child: Text(
-                                'Continue',
-                                style: AppTextTheme.labelLarge.copyWith(
-                                  color: AppColors.onPrimary,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
+                            borderRadius: 6,
                           ),
                         ],
                       ),

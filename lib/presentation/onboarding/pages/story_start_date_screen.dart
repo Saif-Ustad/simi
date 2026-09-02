@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../common/widgets/app_main_button.dart';
 import '../../../common/widgets/onboarding/onboarding_progress_dots.dart';
 import '../../../core/config/theme/app_colors.dart';
 import '../../../core/config/theme/app_spacing.dart';
@@ -19,11 +20,16 @@ class StoryStartDateScreen extends StatefulWidget {
   final VoidCallback onNotSure;
 
   @override
-  State<StoryStartDateScreen> createState() => _StoryStartDateScreenState();
+  State<StoryStartDateScreen> createState() =>
+      _StoryStartDateScreenState();
 }
 
 class _StoryStartDateScreenState extends State<StoryStartDateScreen> {
   DateTime? _selectedDate = DateTime(2023, 10, 14);
+
+  // ------------------------------------------------------------
+  // DATE PICKER
+  // ------------------------------------------------------------
 
   Future<void> _selectDate() async {
     final DateTime initialDate =
@@ -56,12 +62,23 @@ class _StoryStartDateScreenState extends State<StoryStartDateScreen> {
     }
   }
 
+  // ------------------------------------------------------------
+  // DATE FORMAT
+  // ------------------------------------------------------------
+
   String _formatDate(DateTime date) {
-    final String month = date.month.toString().padLeft(2, '0');
-    final String day = date.day.toString().padLeft(2, '0');
+    final String month =
+    date.month.toString().padLeft(2, '0');
+
+    final String day =
+    date.day.toString().padLeft(2, '0');
 
     return '$month/$day/${date.year}';
   }
+
+  // ------------------------------------------------------------
+  // BUILD
+  // ------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +87,7 @@ class _StoryStartDateScreenState extends State<StoryStartDateScreen> {
       body: SafeArea(
         child: Column(
           children: [
+
             // ------------------------------------------------------------
             // TOP NAVIGATION
             // ------------------------------------------------------------
@@ -111,109 +129,119 @@ class _StoryStartDateScreenState extends State<StoryStartDateScreen> {
               ),
             ),
 
-            // ------------------------------------------------------------
-            // HERO IMAGE
-            // ------------------------------------------------------------
+            // ====================================================
+            // MAIN CONTENT
+            // ====================================================
+
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
+
+                    // ==================================================
+                    // HERO IMAGE
+                    // ==================================================
+
                     SizedBox(
-                      height: 200,
                       width: double.infinity,
+                      height: 220,
                       child: Image.asset(
                         'assets/images/story_start.jpg',
-                        fit: BoxFit.fill,
-
-                        // If your image has a different filename,
-                        // change the path here.
+                        fit: BoxFit.cover,
                       ),
                     ),
 
-                    // ----------------------------------------------------
-                    // CONTENT CARD
-                    // ----------------------------------------------------
+                    // ==================================================
+                    // MAIN CONTENT CARD
+                    // ==================================================
+
                     Transform.translate(
-                      offset: const Offset(0, -1),
+                      offset: const Offset(0, -28),
                       child: Container(
                         width: double.infinity,
                         margin: const EdgeInsets.symmetric(
                           horizontal: 16,
                         ),
                         padding: const EdgeInsets.fromLTRB(
-                          18,
+                          24,
+                          30,
+                          24,
                           28,
-                          18,
-                          26,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceBright,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40),
-                          ),
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(38),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withValues(
-                                alpha: 0.06,
+                                alpha: 0.07,
                               ),
-                              blurRadius: 20,
-                              offset: const Offset(0, -4),
+                              blurRadius: 25,
+                              offset: const Offset(0, 8),
                             ),
                           ],
                         ),
                         child: Column(
                           children: [
-                            // Heading
+
+                            // ========================================
+                            // TITLE
+                            // ========================================
+
                             Text(
                               'When did your\nstory begin?',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.playfairDisplay(
-                                fontSize: 32,
-                                fontWeight: FontWeight.w600,
+                              style: AppTextTheme.displayLarge.copyWith(
                                 color: AppColors.textPrimary,
-                                height: 1.15,
+                                fontWeight: FontWeight.w600,
+                                height: 1.2,
                               ),
                             ),
 
                             const SizedBox(height: 18),
 
-                            // Description
+                            // ========================================
+                            // DESCRIPTION
+                            // ========================================
+
                             Text(
                               'Choose the date you consider\nyour anniversary.',
                               textAlign: TextAlign.center,
-                              style: AppTextTheme.bodyLarge.copyWith(
+                              style: AppTextTheme.bodyMedium.copyWith(
                                 color: AppColors.textSecondary,
-                                fontSize: 14,
-                                height: 1.5,
+                                height: 1.4,
                               ),
                             ),
 
-                            const SizedBox(height: 26),
+                            const SizedBox(height: 28),
 
-                            // ------------------------------------------------
+                            // ========================================
                             // DATE FIELD
-                            // ------------------------------------------------
+                            // ========================================
+
                             GestureDetector(
                               onTap: _selectDate,
                               child: Container(
                                 width: double.infinity,
-                                height: 52,
+                                height: 50,
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
+                                  horizontal: 18,
                                 ),
                                 decoration: BoxDecoration(
                                   color: AppColors.surfaceBright,
-                                  borderRadius: BorderRadius.circular(16),
+                                  borderRadius:
+                                  BorderRadius.circular(15),
                                   border: Border.all(
-                                    color: AppColors.outlineVariant,
+                                    color:
+                                    AppColors.outlineVariant,
                                     width: 1,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.04,
+                                      color:
+                                      Colors.black.withValues(
+                                        alpha: 0.035,
                                       ),
                                       blurRadius: 8,
                                       offset: const Offset(0, 2),
@@ -222,22 +250,39 @@ class _StoryStartDateScreenState extends State<StoryStartDateScreen> {
                                 ),
                                 child: Row(
                                   children: [
+
+                                    // Calendar icon
                                     Icon(
-                                      Icons.calendar_month_outlined,
-                                      size: 20,
-                                      color: AppColors.secondary,
+                                      Icons
+                                          .calendar_month_outlined,
+                                      size: 22,
+                                      color:
+                                      AppColors.secondary,
                                     ),
 
-                                    const SizedBox(width: 20),
+                                    const SizedBox(width: 18),
 
+                                    // Date
                                     Text(
                                       _selectedDate == null
                                           ? 'Select date'
-                                          : _formatDate(_selectedDate!),
-                                      style: AppTextTheme.bodyLarge.copyWith(
-                                        color: AppColors.textPrimary,
-                                        fontSize: 16,
+                                          : _formatDate(
+                                        _selectedDate!,
                                       ),
+                                      style: AppTextTheme.bodyMedium.copyWith(
+                                        color: AppColors.textPrimary,
+                                        height: 1.4,
+                                      ),
+                                    ),
+
+                                    const Spacer(),
+
+                                    // Small dropdown indicator
+                                    Icon(
+                                      Icons
+                                          .keyboard_arrow_down_rounded,
+                                      size: 22,
+                                      color: AppColors.textSecondary,
                                     ),
                                   ],
                                 ),
@@ -246,19 +291,23 @@ class _StoryStartDateScreenState extends State<StoryStartDateScreen> {
 
                             const SizedBox(height: 22),
 
-                            // ------------------------------------------------
+                            // ========================================
                             // DATE TYPE CHIPS
-                            // ------------------------------------------------
+                            // ========================================
+
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment:
+                              MainAxisAlignment.center,
                               children: [
+
                                 _DateTypeChip(
-                                  icon: Icons.favorite_border_rounded,
+                                  icon: Icons
+                                      .favorite_border_rounded,
                                   label: 'Special day',
                                   selected: true,
                                 ),
 
-                                const SizedBox(width: 12),
+                                const SizedBox(width: 10),
 
                                 _DateTypeChip(
                                   label: 'First meeting',
@@ -271,81 +320,66 @@ class _StoryStartDateScreenState extends State<StoryStartDateScreen> {
                       ),
                     ),
 
-                    // Space so content doesn't touch bottom button
-                    const SizedBox(height: 40),
+                    // Space after translated card
+                    const SizedBox(height: 5),
                   ],
                 ),
               ),
             ),
 
-            // ------------------------------------------------------------
-            // BOTTOM ACTIONS
-            // ------------------------------------------------------------
-            Padding(
+            // ====================================================
+            // BOTTOM ACTION AREA
+            // ====================================================
+
+            Container(
+              width: double.infinity,
               padding: const EdgeInsets.fromLTRB(
                 24,
-                12,
+                10,
                 24,
                 18,
               ),
+              color: AppColors.surface,
               child: Column(
                 children: [
-                  // Continue button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: _selectedDate == null
-                          ? null
-                          : () {
-                        widget.onContinue(
-                          _selectedDate!,
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: AppColors.onPrimary,
-                        disabledBackgroundColor:
-                        AppColors.primary.withValues(
-                          alpha: 0.4,
-                        ),
-                        elevation: 4,
-                        shadowColor: Colors.black.withValues(
-                          alpha: 0.08,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Continue',
-                            style: AppTextTheme.labelLarge.copyWith(
-                              color: AppColors.onPrimary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+
+                  // ==============================================
+                  // CONTINUE BUTTON
+                  // ==============================================
+
+                  AppMainButton(
+                    text: 'Continue',
+                    onPressed: _selectedDate == null
+                        ? null
+                        : () {
+                      widget.onContinue(
+                        _selectedDate!,
+                      );
+                    },
+                    height: 48,
+                    borderRadius: 6,
                   ),
 
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 12),
 
-                  // Not sure button
+                  // ==============================================
+                  // NOT SURE
+                  // ==============================================
+
                   GestureDetector(
                     onTap: widget.onNotSure,
+                    behavior: HitTestBehavior.opaque,
                     child: Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       child: Text(
                         "I'm not sure yet",
-                        style: AppTextTheme.labelLarge.copyWith(
-                          color: AppColors.textPrimary,
-                          fontSize: 15,
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                     ),
@@ -354,38 +388,6 @@ class _StoryStartDateScreenState extends State<StoryStartDateScreen> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-// ============================================================================
-// BACK BUTTON
-// ============================================================================
-
-class _BackButton extends StatelessWidget {
-  const _BackButton({
-    required this.onPressed,
-  });
-
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      behavior: HitTestBehavior.opaque,
-      child: const SizedBox(
-        width: 48,
-        height: 48,
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Icon(
-            Icons.arrow_back_rounded,
-            size: 30,
-            color: AppColors.primary,
-          ),
         ),
       ),
     );
@@ -410,19 +412,20 @@ class _DateTypeChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 34,
+      height: 36,
       padding: const EdgeInsets.symmetric(
-        horizontal: 16,
+        horizontal: 15,
       ),
       decoration: BoxDecoration(
         color: selected
             ? const Color(0xFFE2DEFF)
             : const Color(0xFFECE7E4),
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+
           if (icon != null) ...[
             Icon(
               icon,
@@ -431,16 +434,18 @@ class _DateTypeChip extends StatelessWidget {
                   ? AppColors.secondary
                   : AppColors.textSecondary,
             ),
+
             const SizedBox(width: 7),
           ],
+
           Text(
             label,
-            style: AppTextTheme.labelLarge.copyWith(
+            style: GoogleFonts.inter(
               fontSize: 12,
+              fontWeight: FontWeight.w500,
               color: selected
                   ? AppColors.secondary
                   : AppColors.textSecondary,
-              fontWeight: FontWeight.w500,
             ),
           ),
         ],

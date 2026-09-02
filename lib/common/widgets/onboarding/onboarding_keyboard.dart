@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/config/theme/app_colors.dart';
+import '../../../core/config/theme/app_text_theme.dart';
 
 // =====================================================================
 // REUSABLE KEYPAD LAYOUT
@@ -61,22 +62,21 @@ class PinKeypadLayout extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: GoogleFonts.playfairDisplay(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
+              style: AppTextTheme.headlineMedium.copyWith(
                 color: AppColors.textPrimary,
+                fontWeight: FontWeight.w600,
+                height: 1.2,
               ),
             ),
 
-            const SizedBox(height: 4),
+            const SizedBox(height: 8),
 
             Text(
               'This ensures only you can access\nyour digital sanctuary.',
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                fontSize: 12,
-                height: 1.4,
+              style: AppTextTheme.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
+                height: 1.4,
               ),
             ),
 
@@ -179,10 +179,10 @@ class PinKeypadLayout extends StatelessWidget {
               ),
               child: Text(
                 key,
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textPrimary,
+                style: AppTextTheme.headlineMedium.copyWith(
+                  color: AppColors.textSecondary,
+                  fontWeight: FontWeight.w600,
+                  height: 1.2,
                 ),
               ),
             ),
