@@ -166,7 +166,7 @@ class SetupCompleteScreen extends StatelessWidget {
 
                   AppMainButton(
                     text: 'Enter Home',
-                    onPressed: () {},
+                    onPressed: onEnterHome,
                     height: 48,
                     borderRadius: 6,
                   ),
