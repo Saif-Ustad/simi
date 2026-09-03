@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../../../common/widgets/home_bottom_navigation.dart';
+import '../../../common/widgets/app_profile_avatar.dart';
 import '../../../core/config/theme/app_colors.dart';
+import '../../../core/config/theme/app_text_theme.dart';
 
 class MoreScreen extends StatelessWidget {
-  const MoreScreen({super.key});
+  const MoreScreen({
+    super.key,
+    this.userPhoto,
+  });
+
+  final ImageProvider? userPhoto;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surface,
-
       body: SafeArea(
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
@@ -21,161 +25,172 @@ class MoreScreen extends StatelessWidget {
             ),
 
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(
-                20,
-                8,
-                20,
-                32,
-              ),
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
               sliver: SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    Text(
-                      'More ❤️',
-                      style: GoogleFonts.playfairDisplay(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                    _buildWelcome(),
+
+                    const SizedBox(height: 28),
+
+                    _SectionTitle(
+                      title: 'OUR STORY',
+                      icon: Icons.favorite_outline_rounded,
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    _buildFeatureGroup([
+                      _FeatureItem(
+                        icon: Icons.photo_library_outlined,
+                        title: 'Memories',
+                        backgroundColor: const Color(0xFFF6E8EA),
+                        onTap: () {
+                          debugPrint('Memories');
+                        },
                       ),
-                    ),
+                      _FeatureItem(
+                        icon: Icons.calendar_month_outlined,
+                        title: 'Special Dates',
+                        backgroundColor: const Color(0xFFE8E5F4),
+                        onTap: () {
+                          debugPrint('Special Dates');
+                        },
+                      ),
+                      _FeatureItem(
+                        icon: Icons.mail_outline_rounded,
+                        title: 'Future Messages',
+                        backgroundColor: const Color(0xFFE5E2F2),
+                        onTap: () {
+                          debugPrint('Future Messages');
+                        },
+                      ),
+                    ]),
 
                     const SizedBox(height: 24),
 
-                    _SectionLabel(
-                      title: 'RELATIONSHIP',
+                    _SectionTitle(
+                      title: 'OUR WELLBEING',
+                      icon: Icons.spa_outlined,
                     ),
 
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 10),
 
-                    _FeatureCard(
-                      icon: Icons.water_drop_outlined,
-                      title: 'Period Tracking',
-                      backgroundColor:
-                      const Color(0xFFFCE4EC),
-                      onTap: () {
-                        debugPrint('Period Tracking');
-                      },
-                    ),
+                    _buildFeatureGroup([
+                      _FeatureItem(
+                        icon: Icons.mood_outlined,
+                        title: 'Mood Journal',
+                        backgroundColor: const Color(0xFFF5F5F5),
+                        onTap: () {
+                          debugPrint('Mood Journal');
+                        },
+                      ),
+                      _FeatureItem(
+                        icon: Icons.water_drop_outlined,
+                        title: 'Period Tracking',
+                        backgroundColor: const Color(0xFFFCE4EC),
+                        onTap: () {
+                          debugPrint('Period Tracking');
+                        },
+                      ),
+                    ]),
 
-                    _FeatureCard(
-                      icon: Icons.calendar_month_outlined,
-                      title: 'Special Dates',
-                      backgroundColor:
-                      const Color(0xFFE8E5F4),
-                      onTap: () {
-                        debugPrint('Special Dates');
-                      },
-                    ),
+                    const SizedBox(height: 24),
 
-                    _FeatureCard(
-                      icon: Icons.mail_outline_rounded,
-                      title: 'Future Messages',
-                      backgroundColor:
-                      const Color(0xFFE5E2F2),
-                      onTap: () {
-                        debugPrint('Future Messages');
-                      },
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    _SectionLabel(
+                    _SectionTitle(
                       title: 'PRIVATE',
-                    ),
-
-                    const SizedBox(height: 8),
-
-                    _FeatureCard(
                       icon: Icons.lock_outline_rounded,
-                      title: 'Private Photos Vault',
-                      subtitle: 'Requires authentication',
-                      backgroundColor:
-                      const Color(0xFFE8E4E2),
-                      onTap: () {
-                        debugPrint('Private Photos Vault');
-                      },
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
 
-                    _SectionLabel(
-                      title: 'LOVE',
-                    ),
-
-                    const SizedBox(height: 8),
-
-                    _FeatureCard(
-                      icon: Icons.favorite_border_rounded,
-                      title: 'Love Notifications',
-                      backgroundColor:
-                      const Color(0xFFF6E8EA),
-                      onTap: () {
-                        debugPrint('Love Notifications');
-                      },
-                    ),
-
-                    _FeatureCard(
-                      icon: Icons.card_giftcard_outlined,
-                      title: 'Gift Wishlist',
-                      backgroundColor:
-                      const Color(0xFFEDE8F5),
-                      onTap: () {
-                        debugPrint('Gift Wishlist');
-                      },
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    _SectionLabel(
-                      title: 'APP',
-                    ),
-
-                    const SizedBox(height: 8),
-
-                    _FeatureCard(
-                      icon: Icons.settings_outlined,
-                      title: 'Settings',
-                      backgroundColor:
-                      const Color(0xFFEDE9E6),
-                      onTap: () {
-                        debugPrint('Settings');
-                      },
-                    ),
-
-                    _FeatureCard(
-                      icon: Icons.shield_outlined,
-                      title: 'Privacy & Security',
-                      backgroundColor:
-                      const Color(0xFFEDE9E6),
-                      onTap: () {
-                        debugPrint('Privacy & Security');
-                      },
-                    ),
-
-                    _FeatureCard(
-                      icon: Icons.notifications_none_rounded,
-                      title: 'Notifications',
-                      backgroundColor:
-                      const Color(0xFFEDE9E6),
-                      onTap: () {
-                        debugPrint('Notifications');
-                      },
-                    ),
+                    _buildFeatureGroup([
+                      _FeatureItem(
+                        icon: Icons.lock_outline_rounded,
+                        title: 'Private Photos Vault',
+                        subtitle: 'Requires authentication',
+                        backgroundColor: const Color(0xFFE8E4E2),
+                        onTap: () {
+                          debugPrint('Private Photos Vault');
+                        },
+                      ),
+                    ]),
 
                     const SizedBox(height: 24),
+
+                    _SectionTitle(
+                      title: 'LOVE',
+                      icon: Icons.auto_awesome_outlined,
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    _buildFeatureGroup([
+                      _FeatureItem(
+                        icon: Icons.favorite_border_rounded,
+                        title: 'Love Notifications',
+                        backgroundColor: const Color(0xFFF6E8EA),
+                        onTap: () {
+                          debugPrint('Love Notifications');
+                        },
+                      ),
+                      _FeatureItem(
+                        icon: Icons.card_giftcard_outlined,
+                        title: 'Gift Wishlist',
+                        backgroundColor: const Color(0xFFEDE8F5),
+                        onTap: () {
+                          debugPrint('Gift Wishlist');
+                        },
+                      ),
+                    ]),
+
+                    const SizedBox(height: 24),
+
+                    _SectionTitle(
+                      title: 'APP',
+                      icon: Icons.tune_rounded,
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    _buildFeatureGroup([
+                      _FeatureItem(
+                        icon: Icons.settings_outlined,
+                        title: 'Settings',
+                        backgroundColor: const Color(0xFFEDE9E6),
+                        onTap: () {
+                          debugPrint('Settings');
+                        },
+                      ),
+                      _FeatureItem(
+                        icon: Icons.notifications_none_rounded,
+                        title: 'Notifications',
+                        backgroundColor: const Color(0xFFEDE9E6),
+                        onTap: () {
+                          debugPrint('Notifications');
+                        },
+                      ),
+                      _FeatureItem(
+                        icon: Icons.shield_outlined,
+                        title: 'Privacy & Security',
+                        backgroundColor: const Color(0xFFEDE9E6),
+                        onTap: () {
+                          debugPrint('Privacy & Security');
+                        },
+                      ),
+                    ]),
+
+                    const SizedBox(height: 28),
+
+                    _buildSignOut(),
+
+                    const SizedBox(height: 12),
 
                     Center(
-                      child: TextButton(
-                        onPressed: () {
-                          debugPrint('Sign Out');
-                        },
-                        child: Text(
-                          'Sign Out',
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.primary,
-                          ),
+                      child: Text(
+                        'Made just for two ❤️',
+                        style: AppTextTheme.labelSmall.copyWith(
+                          color: AppColors.textDisabled,
                         ),
                       ),
                     ),
@@ -189,79 +204,251 @@ class MoreScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
+  // HEADER
+  // ============================================================
+
   Widget _buildHeader() {
     return Container(
-      height: 64,
+      height: 68,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
+          AppProfileAvatar(
+            image: userPhoto,
+            fallbackIcon: Icons.person_outline_rounded,
+          ),
+
+          const SizedBox(width: 12),
+
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'YOUR SPACE',
+                  style: AppTextTheme.labelSmall.copyWith(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.3,
+                  ),
+                ),
+
+                const SizedBox(height: 2),
+
+                Text(
+                  'SIMI',
+                  style: AppTextTheme.headlineSmall.copyWith(
+                    fontSize: 18,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           Container(
-            width: 36,
-            height: 36,
+            width: 40,
+            height: 40,
             decoration: BoxDecoration(
+              color: AppColors.surfaceBright,
               shape: BoxShape.circle,
-              color: AppColors.primaryContainer,
               border: Border.all(
-                color: Colors.white,
-                width: 2,
+                color: AppColors.outlineVariant,
               ),
             ),
             child: const Icon(
-              Icons.person_outline_rounded,
+              Icons.lock_outline_rounded,
               size: 18,
-              color: AppColors.primary,
+              color: AppColors.textSecondary,
             ),
-          ),
-
-          const SizedBox(width: 10),
-
-          Expanded(
-            child: Center(
-              child: Text(
-                'My Love',
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary,
-                ),
-              ),
-            ),
-          ),
-
-          const Icon(
-            Icons.lock_outline_rounded,
-            size: 18,
-            color: AppColors.textSecondary,
           ),
         ],
       ),
     );
   }
-}
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({
-    required this.title,
-  });
+  // ============================================================
+  // WELCOME
+  // ============================================================
 
-  final String title;
+  Widget _buildWelcome() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
+      decoration: BoxDecoration(
+        color: AppColors.primaryContainer.withValues(alpha: 0.28),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: AppColors.primaryContainer.withValues(alpha: 0.35),
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'More ❤️',
+                  style: AppTextTheme.headlineMedium,
+                ),
 
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: GoogleFonts.inter(
-        fontSize: 9,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 1.1,
-        color: AppColors.textSecondary,
+                const SizedBox(height: 6),
+
+                Text(
+                  'Everything that makes your little world yours.',
+                  style: AppTextTheme.bodyMediumSecondary,
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(width: 16),
+
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: AppColors.surfaceBright,
+              shape: BoxShape.circle,
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x12000000),
+                  blurRadius: 12,
+                  offset: Offset(0, 5),
+                ),
+              ],
+            ),
+            child: const Icon(
+              Icons.favorite_rounded,
+              color: AppColors.primary,
+              size: 22,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // FEATURE GROUP
+  // ============================================================
+
+  Widget _buildFeatureGroup(List<_FeatureItem> items) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.surfaceBright,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppColors.outlineVariant.withValues(alpha: 0.65),
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x08000000),
+            blurRadius: 15,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          for (int i = 0; i < items.length; i++) ...[
+            _FeatureCard(
+              item: items[i],
+            ),
+
+            if (i != items.length - 1)
+              Padding(
+                padding: const EdgeInsets.only(left: 68),
+                child: Divider(
+                  height: 1,
+                  color: AppColors.outlineVariant.withValues(alpha: 0.45),
+                ),
+              ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // SIGN OUT
+  // ============================================================
+
+  Widget _buildSignOut() {
+    return Center(
+      child: TextButton.icon(
+        onPressed: () {
+          debugPrint('Sign Out');
+        },
+        icon: const Icon(
+          Icons.logout_rounded,
+          size: 17,
+        ),
+        label: Text(
+          'Sign Out',
+          style: AppTextTheme.labelLarge.copyWith(
+            color: AppColors.primary,
+          ),
+        ),
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 18,
+            vertical: 10,
+          ),
+          foregroundColor: AppColors.primary,
+        ),
       ),
     );
   }
 }
 
-class _FeatureCard extends StatelessWidget {
-  const _FeatureCard({
+// ============================================================
+// SECTION TITLE
+// ============================================================
+
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle({
+    required this.title,
+    required this.icon,
+  });
+
+  final String title;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 15,
+          color: AppColors.primary,
+        ),
+
+        const SizedBox(width: 7),
+
+        Text(
+          title,
+          style: AppTextTheme.labelSmall.copyWith(
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.2,
+            color: AppColors.textSecondary,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ============================================================
+// FEATURE ITEM DATA
+// ============================================================
+
+class _FeatureItem {
+  const _FeatureItem({
     required this.icon,
     required this.title,
     required this.backgroundColor,
@@ -274,75 +461,80 @@ class _FeatureCard extends StatelessWidget {
   final String? subtitle;
   final Color backgroundColor;
   final VoidCallback onTap;
+}
+
+// ============================================================
+// FEATURE CARD
+// ============================================================
+
+class _FeatureCard extends StatelessWidget {
+  const _FeatureCard({
+    required this.item,
+  });
+
+  final _FeatureItem item;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Material(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(14),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 9,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 34,
-                  height: 34,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: backgroundColor,
-                  ),
-                  child: Icon(
-                    icon,
-                    size: 17,
-                    color: AppColors.textSecondary,
-                  ),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: item.onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 14,
+            vertical: 13,
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: item.backgroundColor,
+                  shape: BoxShape.circle,
                 ),
+                child: Icon(
+                  item.icon,
+                  size: 19,
+                  color: AppColors.textSecondary,
+                ),
+              ),
 
-                const SizedBox(width: 12),
+              const SizedBox(width: 14),
 
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment:
-                    CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary,
-                        ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      style: AppTextTheme.labelLarge.copyWith(
+                        fontSize: 14,
+                        color: AppColors.textPrimary,
                       ),
+                    ),
 
-                      if (subtitle != null) ...[
-                        const SizedBox(height: 2),
-                        Text(
-                          subtitle!,
-                          style: GoogleFonts.inter(
-                            fontSize: 9,
-                            color: AppColors.textSecondary,
-                          ),
-                        ),
-                      ],
+                    if (item.subtitle != null) ...[
+                      const SizedBox(height: 3),
+                      Text(
+                        item.subtitle!,
+                        style: AppTextTheme.labelSmall,
+                      ),
                     ],
-                  ),
+                  ],
                 ),
+              ),
 
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  size: 18,
-                  color: AppColors.outlineVariant,
-                ),
-              ],
-            ),
+              const SizedBox(width: 8),
+
+              Icon(
+                Icons.chevron_right_rounded,
+                size: 20,
+                color: AppColors.outlineVariant,
+              ),
+            ],
           ),
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../common/widgets/home_bottom_navigation.dart';
+import '../../../common/widgets/app_bottom_navigation.dart';
 import '../../../presentation/chat/pages/love_chat_screen.dart';
 import '../../../presentation/home/pages/home_screen.dart';
 import '../../../presentation/memories/pages/memories_screen.dart';
@@ -34,7 +34,7 @@ class AppRoutes {
 }
 
 final GoRouter router = GoRouter(
-  initialLocation: AppRoutes.home,
+  initialLocation: AppRoutes.welcome,
 
   routes: [
     // --------------------------------------------------

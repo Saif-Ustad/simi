@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../common/widgets/home_bottom_navigation.dart';
 import '../../../core/config/theme/app_colors.dart';
 
 class PeriodScreen extends StatelessWidget {
