@@ -2357,6 +2357,7 @@ class _PeriodDashboardState extends State<_PeriodDashboard>
 
                         const SizedBox(height: 18),
 
+
                         // CALENDAR
                         _DashboardEntrance(
                           controller: _entranceController,
@@ -2366,6 +2367,25 @@ class _PeriodDashboardState extends State<_PeriodDashboard>
                         ),
 
                         const SizedBox(height: 18),
+
+                        // Symptoms
+                        _DashboardEntrance(
+                          controller: _entranceController,
+                          begin: 0.62,
+                          end: 1.0,
+                          child: _SymptomHistoryRow(
+                            title: 'Today’s symptoms',
+                            subtitle: 'Headache • Fatigue • Nausea',
+                            onTap: () {
+                              context.push(
+                                AppRoutes.symptomDetail,
+                              );
+                            },
+                          ),
+                        ),
+
+                        const SizedBox(height: 18),
+
 
                         // TODAY
                         _DashboardEntrance(
@@ -4486,6 +4506,78 @@ class _CycleTimelineEvent extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _SymptomHistoryRow extends StatelessWidget {
+  const _SymptomHistoryRow({
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 12,
+          ),
+          child: Row(
+            children: [
+              const _SectionIcon(
+                icon: Icons.favorite_border_rounded,
+              ),
+
+              const SizedBox(width: 10),
+
+              Expanded(
+                child: Text(
+                  'Today’s symptoms',
+                  style: AppTextTheme.headlineSmall.copyWith(
+                    fontFamily: 'Playfair Display',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+
+              TextButton(
+                onPressed: () {
+                  context.push(
+                    AppRoutes.symptomHistory,
+                  );
+                },
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 6,
+                  ),
+                  minimumSize: Size.zero,
+                  tapTargetSize:
+                  MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: Text(
+                  'View all',
+                  style: AppTextTheme.labelSmall.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

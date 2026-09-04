@@ -14,13 +14,19 @@ import '../../../presentation/onboarding/pages/pin_setup_screen.dart';
 import '../../../presentation/onboarding/pages/biometric_screen.dart';
 import '../../../presentation/onboarding/pages/setup_complete_screen.dart';
 import '../../../presentation/period/pages/Period_length_screen.dart';
+import '../../../presentation/period/pages/Symptom_Detail_Screen.dart';
 import '../../../presentation/period/pages/add_period_record_screen.dart';
+import '../../../presentation/period/pages/add_symptoms_screen.dart';
 import '../../../presentation/period/pages/cycle_start_date_screen.dart';
+import '../../../presentation/period/pages/edit_period_record_screen.dart';
 import '../../../presentation/period/pages/period_cycle_length_screen.dart';
+import '../../../presentation/period/pages/period_history_screen.dart';
 import '../../../presentation/period/pages/period_home_screen.dart';
 import '../../../presentation/period/pages/period_saved_success_screen.dart';
 import '../../../presentation/period/pages/period_settings_screen.dart';
 import '../../../presentation/period/pages/period_setup_complete_screen.dart';
+import '../../../presentation/period/pages/symptom_history_screen.dart';
+import '../../../presentation/period/pages/symptoms_saved_screen.dart';
 import '../theme/app_colors.dart';
 
 class AppRoutes {
@@ -36,7 +42,6 @@ class AppRoutes {
   static const String home = '/home';
   static const String memories = '/memories';
 
-
   static const String period = '/period';
   static const String periodSetup = '/period/setup';
   static const String periodCycleStartDate = '/period/cycle-start-date';
@@ -44,9 +49,14 @@ class AppRoutes {
   static const String periodLength = '/period/period-length';
   static const String periodSetupComplete = '/period/setup-complete';
   static const String periodAddRecord = '/period/add-record';
-  static const String periodSavedSuccess  = '/period/saved-success';
-  static const String periodSettings  = '/period/settings';
-
+  static const String periodSavedSuccess = '/period/saved-success';
+  static const String periodSettings = '/period/settings';
+  static const String periodEditRecord = '/period/edit-record';
+  static const String addSymptoms = '/period/symptoms/add';
+  static const String symptomsSaved = '/period/symptoms/saved';
+  static const String symptomDetail = '/period/symptoms/detail';
+  static const String periodHistory = '/period/history';
+  static const String symptomHistory = '/period/symptoms/history';
 
   static const String chat = '/chat';
   static const String more = '/more';
@@ -206,20 +216,14 @@ final GoRouter router = GoRouter(
     // -------------------------
     // MAIN APP
     // -------------------------
-
     ShellRoute(
-      builder: (
-          BuildContext context,
-          GoRouterState state,
-          Widget child,
-          ) {
+      builder: (BuildContext context, GoRouterState state, Widget child) {
         return Scaffold(
           backgroundColor: AppColors.surface,
 
           body: child,
 
-          bottomNavigationBar:
-          const HomeBottomNavigation(),
+          bottomNavigationBar: const HomeBottomNavigation(),
         );
       },
 
@@ -241,7 +245,31 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: AppRoutes.period,
           builder: (context, state) {
-            return PeriodHomeScreen(lastPeriodDate: DateTime(2026, 8, 26));
+            return PeriodHomeScreen(
+              lastPeriodDate: DateTime(2026, 8, 26),
+              onEditPeriod: () {
+                context.push(
+                  AppRoutes.periodEditRecord,
+                  extra: DateTime(2026, 8, 26),
+                );
+              },
+              onAddPeriod: () {
+                context.push(
+                  AppRoutes.periodAddRecord
+                );
+              },
+              onAddSymptoms: () {
+                context.push(
+                  AppRoutes.addSymptoms,
+                );
+              },
+
+              onOpenHistory: () {
+                context.push(
+                  AppRoutes.periodHistory,
+                );
+              },
+            );
           },
         ),
 
@@ -258,7 +286,6 @@ final GoRouter router = GoRouter(
             return const MoreScreen();
           },
         ),
-
       ],
     ),
 
@@ -293,7 +320,9 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.periodSetupComplete,
       builder: (context, state) {
-        return PeriodSetupCompleteScreen(lastPeriodDate: DateTime(2023, 10, 12));
+        return PeriodSetupCompleteScreen(
+          lastPeriodDate: DateTime(2023, 10, 12),
+        );
       },
     ),
 
@@ -307,12 +336,9 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.periodSavedSuccess,
       builder: (context, state) {
-        final startDate =
-        state.extra as DateTime;
+        final startDate = state.extra as DateTime;
 
-        return PeriodSavedSuccessScreen(
-          startDate: startDate,
-        );
+        return PeriodSavedSuccessScreen(startDate: startDate);
       },
     ),
 
@@ -320,6 +346,50 @@ final GoRouter router = GoRouter(
       path: AppRoutes.periodSettings,
       builder: (context, state) {
         return PeriodSettingsScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.periodEditRecord,
+      builder: (context, state) {
+        return EditPeriodRecordScreen(
+          initialStartDate: state.extra as DateTime?,
+        );
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.addSymptoms,
+      builder: (context, state) {
+        return const AddSymptomsScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.symptomsSaved,
+      builder: (context, state) {
+        return const SymptomsSavedScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.symptomDetail,
+      builder: (context, state) {
+        return const SymptomDetailScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.periodHistory,
+      builder: (context, state) {
+        return const PeriodHistoryScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.symptomHistory,
+      builder: (context, state) {
+        return const SymptomHistoryScreen();
       },
     ),
 
