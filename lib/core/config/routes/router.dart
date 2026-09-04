@@ -19,6 +19,7 @@ import '../../../presentation/period/pages/cycle_start_date_screen.dart';
 import '../../../presentation/period/pages/period_cycle_length_screen.dart';
 import '../../../presentation/period/pages/period_home_screen.dart';
 import '../../../presentation/period/pages/period_saved_success_screen.dart';
+import '../../../presentation/period/pages/period_settings_screen.dart';
 import '../../../presentation/period/pages/period_setup_complete_screen.dart';
 import '../theme/app_colors.dart';
 
@@ -44,6 +45,7 @@ class AppRoutes {
   static const String periodSetupComplete = '/period/setup-complete';
   static const String periodAddRecord = '/period/add-record';
   static const String periodSavedSuccess  = '/period/saved-success';
+  static const String periodSettings  = '/period/settings';
 
 
   static const String chat = '/chat';
@@ -311,6 +313,13 @@ final GoRouter router = GoRouter(
         return PeriodSavedSuccessScreen(
           startDate: startDate,
         );
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.periodSettings,
+      builder: (context, state) {
+        return PeriodSettingsScreen();
       },
     ),
 

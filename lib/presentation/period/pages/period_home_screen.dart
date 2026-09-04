@@ -2503,10 +2503,10 @@ class _PeriodDashboardState extends State<_PeriodDashboard>
                 ),
               ),
               child: IconButton(
-                onPressed: widget.onOpenSettings,
+                onPressed: () => (context.push(AppRoutes.periodSettings)),
                 padding: EdgeInsets.zero,
                 icon: const Icon(
-                  Icons.lock_outline_rounded,
+                  Icons.settings_outlined,
                   size: 17,
                   color: AppColors.textSecondary,
                 ),
