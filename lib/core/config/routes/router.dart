@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:simi/presentation/period/pages/period_setup_screen.dart';
 import '../../../common/widgets/app_bottom_navigation.dart';
 import '../../../presentation/chat/pages/love_chat_screen.dart';
 import '../../../presentation/home/pages/home_screen.dart';
@@ -13,7 +13,13 @@ import '../../../presentation/onboarding/pages/profile_photos_screen.dart';
 import '../../../presentation/onboarding/pages/pin_setup_screen.dart';
 import '../../../presentation/onboarding/pages/biometric_screen.dart';
 import '../../../presentation/onboarding/pages/setup_complete_screen.dart';
-import '../../../presentation/period/pages/period_screen.dart';
+import '../../../presentation/period/pages/Period_length_screen.dart';
+import '../../../presentation/period/pages/add_period_record_screen.dart';
+import '../../../presentation/period/pages/cycle_start_date_screen.dart';
+import '../../../presentation/period/pages/period_cycle_length_screen.dart';
+import '../../../presentation/period/pages/period_home_screen.dart';
+import '../../../presentation/period/pages/period_saved_success_screen.dart';
+import '../../../presentation/period/pages/period_setup_complete_screen.dart';
 import '../theme/app_colors.dart';
 
 class AppRoutes {
@@ -28,13 +34,24 @@ class AppRoutes {
   // Main app
   static const String home = '/home';
   static const String memories = '/memories';
+
+
   static const String period = '/period';
+  static const String periodSetup = '/period/setup';
+  static const String periodCycleStartDate = '/period/cycle-start-date';
+  static const String periodCycleLength = '/period/cycle-length';
+  static const String periodLength = '/period/period-length';
+  static const String periodSetupComplete = '/period/setup-complete';
+  static const String periodAddRecord = '/period/add-record';
+  static const String periodSavedSuccess  = '/period/saved-success';
+
+
   static const String chat = '/chat';
   static const String more = '/more';
 }
 
 final GoRouter router = GoRouter(
-  initialLocation: AppRoutes.welcome,
+  initialLocation: AppRoutes.home,
 
   routes: [
     // --------------------------------------------------
@@ -222,7 +239,7 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: AppRoutes.period,
           builder: (context, state) {
-            return const PeriodScreen();
+            return PeriodHomeScreen(lastPeriodDate: DateTime(2026, 8, 26));
           },
         ),
 
@@ -239,7 +256,63 @@ final GoRouter router = GoRouter(
             return const MoreScreen();
           },
         ),
+
       ],
     ),
+
+    GoRoute(
+      path: AppRoutes.periodSetup,
+      builder: (context, state) {
+        return const PeriodSetupScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.periodCycleStartDate,
+      builder: (context, state) {
+        return const PeriodCycleStartDateScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.periodCycleLength,
+      builder: (context, state) {
+        return const PeriodCycleLengthScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.periodLength,
+      builder: (context, state) {
+        return const PeriodLengthScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.periodSetupComplete,
+      builder: (context, state) {
+        return PeriodSetupCompleteScreen(lastPeriodDate: DateTime(2023, 10, 12));
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.periodAddRecord,
+      builder: (context, state) {
+        return AddPeriodRecordScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.periodSavedSuccess,
+      builder: (context, state) {
+        final startDate =
+        state.extra as DateTime;
+
+        return PeriodSavedSuccessScreen(
+          startDate: startDate,
+        );
+      },
+    ),
+
   ],
 );
