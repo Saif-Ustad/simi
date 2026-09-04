@@ -2378,7 +2378,7 @@ class _PeriodDashboardState extends State<_PeriodDashboard>
                             subtitle: 'Headache • Fatigue • Nausea',
                             onTap: () {
                               context.push(
-                                AppRoutes.symptomDetail,
+                                AppRoutes.symptomHistory,
                               );
                             },
                           ),
@@ -3095,15 +3095,10 @@ class _PeriodDashboardState extends State<_PeriodDashboard>
     );
   }
 
-  // ============================================================
-  // TODAY
-  // ============================================================
-
   Widget _buildToday() {
     return _PremiumSectionCard(
       child: Column(
-        crossAxisAlignment:
-        CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -3149,34 +3144,49 @@ class _PeriodDashboardState extends State<_PeriodDashboard>
 
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: _PremiumMood(
                   emoji: '😊',
                   title: 'Good',
-                  background:
-                  Color(0xFFF6EEE8),
+                  background: const Color(0xFFF6EEE8),
+                  onTap: () {
+                    context.push(
+                      AppRoutes.todayFeeling,
+                      extra: 'Good',
+                    );
+                  },
                 ),
               ),
 
               const SizedBox(width: 8),
 
-              const Expanded(
+              Expanded(
                 child: _PremiumMood(
                   emoji: '😌',
                   title: 'Calm',
-                  background:
-                  Color(0xFFF0EFF6),
+                  background: const Color(0xFFF0EFF6),
+                  onTap: () {
+                    context.push(
+                      AppRoutes.todayFeeling,
+                      extra: 'Calm',
+                    );
+                  },
                 ),
               ),
 
               const SizedBox(width: 8),
 
-              const Expanded(
+              Expanded(
                 child: _PremiumMood(
                   emoji: '🥺',
                   title: 'Low',
-                  background:
-                  Color(0xFFFCE4EC),
+                  background: const Color(0xFFFCE4EC),
+                  onTap: () {
+                    context.push(
+                      AppRoutes.todayFeeling,
+                      extra: 'Low',
+                    );
+                  },
                 ),
               ),
             ],
@@ -3188,8 +3198,11 @@ class _PeriodDashboardState extends State<_PeriodDashboard>
             width: double.infinity,
             height: 44,
             child: OutlinedButton.icon(
-              onPressed:
-              widget.onAddSymptoms,
+              onPressed: () {
+                context.push(
+                  AppRoutes.todayFeeling,
+                );
+              },
               icon: const Icon(
                 Icons.edit_outlined,
                 size: 15,
@@ -3197,16 +3210,13 @@ class _PeriodDashboardState extends State<_PeriodDashboard>
               label: const Text(
                 'Add how you feel today',
               ),
-              style:
-              OutlinedButton.styleFrom(
-                foregroundColor:
-                AppColors.primary,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.primary,
                 side: BorderSide(
                   color: AppColors.primary
                       .withValues(alpha: 0.28),
                 ),
-                shape:
-                RoundedRectangleBorder(
+                shape: RoundedRectangleBorder(
                   borderRadius:
                   BorderRadius.circular(999),
                 ),
@@ -3217,7 +3227,6 @@ class _PeriodDashboardState extends State<_PeriodDashboard>
       ),
     );
   }
-
   // ============================================================
   // INSIGHTS
   // ============================================================
@@ -4051,45 +4060,53 @@ class _PremiumMood extends StatelessWidget {
     required this.emoji,
     required this.title,
     required this.background,
+    this.onTap,
   });
 
   final String emoji;
   final String title;
   final Color background;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding:
-      const EdgeInsets.symmetric(
-        vertical: 11,
-      ),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius:
-        BorderRadius.circular(15),
-      ),
-      child: Column(
-        children: [
-          Text(
-            emoji,
-            style: const TextStyle(
-              fontSize: 20,
-            ),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Ink(
+          height: 72,
+          decoration: BoxDecoration(
+            color: background,
+            borderRadius:
+            BorderRadius.circular(16),
           ),
+          child: Column(
+            mainAxisAlignment:
+            MainAxisAlignment.center,
+            children: [
+              Text(
+                emoji,
+                style: const TextStyle(
+                  fontSize: 23,
+                ),
+              ),
 
-          const SizedBox(height: 4),
+              const SizedBox(height: 5),
 
-          Text(
-            title,
-            style:
-            AppTextTheme.labelSmall.copyWith(
-              fontSize: 9,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
+              Text(
+                title,
+                style:
+                AppTextTheme.labelSmall.copyWith(
+                  fontSize: 9,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -4510,7 +4527,6 @@ class _CycleTimelineEvent extends StatelessWidget {
     );
   }
 }
-
 class _SymptomHistoryRow extends StatelessWidget {
   const _SymptomHistoryRow({
     required this.title,
@@ -4528,50 +4544,108 @@ class _SymptomHistoryRow extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 12,
+        borderRadius: BorderRadius.circular(20),
+        child: Ink(
+          padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.76),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: AppColors.outlineVariant.withValues(alpha: 0.65),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.035),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
           child: Row(
             children: [
-              const _SectionIcon(
-                icon: Icons.favorite_border_rounded,
+              // --------------------------------------------------
+              // Icon
+              // --------------------------------------------------
+              Container(
+                width: 46,
+                height: 46,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFCE4EC),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.auto_awesome_rounded,
+                  size: 20,
+                  color: AppColors.primary,
+                ),
+              ),
+
+              const SizedBox(width: 12),
+
+              // --------------------------------------------------
+              // Main text
+              // --------------------------------------------------
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextTheme.bodyLarge.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+
+                    const SizedBox(height: 4),
+
+                    Text(
+                      subtitle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextTheme.bodyMedium.copyWith(
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               const SizedBox(width: 10),
 
-              Expanded(
-                child: Text(
-                  'Today’s symptoms',
-                  style: AppTextTheme.headlineSmall.copyWith(
-                    fontFamily: 'Playfair Display',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-
-              TextButton(
-                onPressed: () {
-                  context.push(
-                    AppRoutes.symptomHistory,
-                  );
-                },
-                style: TextButton.styleFrom(
+              // --------------------------------------------------
+              // View all
+              // --------------------------------------------------
+              InkWell(
+                onTap: onTap,
+                borderRadius: BorderRadius.circular(12),
+                child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 4,
-                    vertical: 6,
+                    vertical: 4,
                   ),
-                  minimumSize: Size.zero,
-                  tapTargetSize:
-                  MaterialTapTargetSize.shrinkWrap,
-                ),
-                child: Text(
-                  'View all',
-                  style: AppTextTheme.labelSmall.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'View all',
+                        style: AppTextTheme.labelSmall.copyWith(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(width: 3),
+                      const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 10,
+                        color: AppColors.primary,
+                      ),
+                    ],
                   ),
                 ),
               ),

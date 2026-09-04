@@ -27,6 +27,7 @@ import '../../../presentation/period/pages/period_settings_screen.dart';
 import '../../../presentation/period/pages/period_setup_complete_screen.dart';
 import '../../../presentation/period/pages/symptom_history_screen.dart';
 import '../../../presentation/period/pages/symptoms_saved_screen.dart';
+import '../../../presentation/period/pages/today_feeling_screen.dart';
 import '../theme/app_colors.dart';
 
 class AppRoutes {
@@ -57,6 +58,7 @@ class AppRoutes {
   static const String symptomDetail = '/period/symptoms/detail';
   static const String periodHistory = '/period/history';
   static const String symptomHistory = '/period/symptoms/history';
+  static const String todayFeeling = '/period/today-feeling';
 
   static const String chat = '/chat';
   static const String more = '/more';
@@ -390,6 +392,18 @@ final GoRouter router = GoRouter(
       path: AppRoutes.symptomHistory,
       builder: (context, state) {
         return const SymptomHistoryScreen();
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.todayFeeling,
+      builder: (context, state) {
+        final initialMood =
+        state.extra as String?;
+
+        return TodayFeelingScreen(
+          initialMood: initialMood,
+        );
       },
     ),
 
