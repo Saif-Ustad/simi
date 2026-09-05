@@ -48,7 +48,7 @@ class MoreScreen extends StatelessWidget {
                         title: 'Memories',
                         backgroundColor: const Color(0xFFF6E8EA),
                         onTap: () {
-                          debugPrint('Memories');
+                          context.push(AppRoutes.memories);
                         },
                       ),
                       _FeatureItem(
@@ -92,7 +92,7 @@ class MoreScreen extends StatelessWidget {
                         title: 'Period Tracking',
                         backgroundColor: const Color(0xFFFCE4EC),
                         onTap: () {
-                          debugPrint('Period Tracking');
+                          context.push(AppRoutes.period);
                         },
                       ),
                     ]),

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simi/presentation/period/pages/period_setup_screen.dart';
 import '../../../common/widgets/app_bottom_navigation.dart';
+import '../../../presentation/chat/pages/chat_details_screen.dart';
+import '../../../presentation/chat/pages/create_chat_screen.dart';
+import '../../../presentation/chat/pages/custom_chat_screen.dart';
+import '../../../presentation/chat/pages/love_chat_conversation_screen.dart';
 import '../../../presentation/chat/pages/love_chat_screen.dart';
 import '../../../presentation/home/pages/home_screen.dart';
 import '../../../presentation/memories/pages/collection_detail_screen.dart';
@@ -78,6 +82,12 @@ class AppRoutes {
   static const String todayFeeling = '/period/today-feeling';
 
   static const String chat = '/chat';
+  static const String createChat = '/chat/create';
+  static const String customChat = '/chat/create/custom';
+  static const String chatConversation = '/chat/conversation';
+  static const String chatDetails = '/chat/details';
+
+
   static const String more = '/more';
 
   static const String privateVault = '/private-vault';
@@ -387,7 +397,86 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: AppRoutes.chat,
           builder: (context, state) {
-            return const LoveChatScreen();
+            final chats = <LoveChatItem>[
+              LoveChatItem(
+                id: '1',
+                title: 'Our Future',
+                subtitle: '✨ Future',
+                lastMessage:
+                'I think Japan would be perfect for us next year.',
+                lastMessageAt: DateTime.now().subtract(
+                  const Duration(minutes: 18),
+                ),
+                messageCount: 42,
+                icon: Icons.auto_awesome_rounded,
+                isUnread: true,
+                isFavorite: true,
+              ),
+
+              LoveChatItem(
+                id: '2',
+                title: 'Late Night Thoughts',
+                subtitle: '🌙 Deep',
+                lastMessage:
+                'There is something I have been wanting to tell you...',
+                lastMessageAt: DateTime.now().subtract(
+                  const Duration(hours: 9),
+                ),
+                messageCount: 68,
+                icon: Icons.nightlight_round,
+              ),
+
+              LoveChatItem(
+                id: '3',
+                title: 'Things I Love About You',
+                subtitle: '💕 Appreciation',
+                lastMessage:
+                'I still love the way you get excited about little things.',
+                lastMessageAt: DateTime.now().subtract(
+                  const Duration(days: 2),
+                ),
+                messageCount: 31,
+                icon: Icons.favorite_rounded,
+                isFavorite: true,
+              ),
+
+              LoveChatItem(
+                id: '4',
+                title: 'Dream Trips',
+                subtitle: '✈️ Adventures',
+                lastMessage:
+                'Okay, adding Switzerland to our list.',
+                lastMessageAt: DateTime.now().subtract(
+                  const Duration(days: 6),
+                ),
+                messageCount: 24,
+                icon: Icons.flight_takeoff_rounded,
+              ),
+            ];
+
+            return LoveChatScreen(
+              chats: chats,
+
+              onChatTap: (chat) {
+                context.push(
+                  AppRoutes.chatConversation,
+                  extra: chat,
+                );
+              },
+
+              onCreateChat: () {
+                debugPrint('create chat');
+                context.push(AppRoutes.createChat);
+              },
+
+              onSearch: (query) {
+                debugPrint('Search: $query');
+              },
+
+              onFavoriteChanged: (chat) {
+                debugPrint('Favorite: ${chat.title}');
+              },
+            );
           },
         ),
 
@@ -1205,6 +1294,137 @@ final GoRouter router = GoRouter(
     ),
 
 
+    GoRoute(
+      path: AppRoutes.createChat,
+      builder: (context, state) {
+        return CreateChatScreen(
+          onBack: () => context.pop(),
+          onCreateChat: (data) {
+            debugPrint('Created chat: ${data.title}');
+            debugPrint('Topic: ${data.topic}');
+            debugPrint('Prompt: ${data.prompt}');
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.customChat,
+      builder: (context, state) {
+        return CustomChatScreen(
+          onBack: () => context.pop(),
+          onCreateChat: (data) {
+            debugPrint('Custom chat: ${data.title}');
+            debugPrint('Topic: ${data.topic}');
+            debugPrint('Prompt: ${data.prompt}');
+            debugPrint('Icon: ${data.icon}');
+          },
+        );
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.chatConversation,
+      builder: (context, state) {
+        final chat = state.extra as LoveChatItem;
+
+        return LoveChatConversationScreen(
+          chat: chat,
+          partnerName: 'Love',
+          partnerInitial: 'L',
+          messages: [
+            LoveChatMessage(
+              text: 'I think Japan would be perfect for us next year.',
+              time: DateTime.now().subtract(
+                const Duration(minutes: 32),
+              ),
+              isMine: false,
+            ),
+            LoveChatMessage(
+              text: 'Japan? 😭❤️',
+              time: DateTime.now().subtract(
+                const Duration(minutes: 29),
+              ),
+              isMine: true,
+            ),
+            LoveChatMessage(
+              text: 'Yes. Imagine us walking through Kyoto together.',
+              time: DateTime.now().subtract(
+                const Duration(minutes: 27),
+              ),
+              isMine: false,
+            ),
+            LoveChatMessage(
+              text: 'Okay, now I really want to go.',
+              time: DateTime.now().subtract(
+                const Duration(minutes: 24),
+              ),
+              isMine: true,
+            ),
+          ],
+          onBack: () => context.pop(),
+          onDetails: () {
+            context.push(
+              AppRoutes.chatDetails,
+              extra: chat,
+            );
+          },
+          onSend: (message) {
+            debugPrint('Sent: $message');
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.chatDetails,
+      builder: (context, state) {
+        final chat = state.extra as LoveChatItem;
+
+        return ChatDetailsScreen(
+          chat: chat,
+          partnerName: 'Love',
+          createdAt: DateTime.now().subtract(
+            const Duration(days: 18),
+          ),
+          onBack: () => context.pop(),
+
+          onFavoriteChanged: (value) {
+            debugPrint(
+              'Favorite ${chat.title}: $value',
+            );
+          },
+
+          onRename: (name) {
+            debugPrint(
+              'Renamed ${chat.title} → $name',
+            );
+          },
+
+          onArchive: () {
+            debugPrint(
+              'Archived: ${chat.title}',
+            );
+            context.pop();
+          },
+
+          onClearMessages: () {
+            debugPrint(
+              'Cleared messages: ${chat.title}',
+            );
+          },
+
+          onDelete: () {
+            debugPrint(
+              'Deleted: ${chat.title}',
+            );
+            context.pop();
+          },
+        );
+      },
+    ),
 
   ],
 );
