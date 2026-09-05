@@ -237,10 +237,92 @@ final GoRouter router = GoRouter(
           },
         ),
 
+        // GoRoute(
+        //   path: AppRoutes.memories,
+        //   builder: (context, state) {
+        //     return const MemoriesScreen();
+        //   },
+        // ),
+
         GoRoute(
           path: AppRoutes.memories,
           builder: (context, state) {
-            return const MemoriesScreen();
+            return MemoriesScreen(
+              memories: [
+                MemoryItem(
+                  title: 'Our First Trip',
+                  description: 'Our first adventure together.',
+                  date: DateTime(2025, 8, 12),
+                  folder: 'Travel',
+                  location: 'Goa',
+
+                  // coverImage: const AssetImage(
+                  //   'assets/images/memories/goa_cover.png',
+                  // ),
+
+                  images: const [
+                    // AssetImage('assets/images/memories/goa_cover.png'),
+                    AssetImage('assets/images/memories/goa_2.png'),
+                    AssetImage('assets/images/memories/goa_3.png'),
+                  ],
+
+                  tags: const [
+                    'Travel',
+                    'Special',
+                  ],
+                ),
+                MemoryItem(
+                  title: 'The Proposal',
+                  description:
+                  'The moment everything changed. A memory we will carry with us forever.',
+                  date: DateTime(2024, 12, 24),
+                  folder: 'Our Story',
+                  location: 'Mumbai',
+                  tags: const [
+                    'Special',
+                    'Love',
+                  ],
+                ),
+
+                MemoryItem(
+                  title: 'Our First Trip',
+                  description:
+                  'We got lost, laughed too much, ate amazing food and somehow made the perfect day.',
+                  date: DateTime(2024, 8, 12),
+                  folder: 'Travel',
+                  location: 'Paris',
+                  tags: const [
+                    'Travel',
+                    'Firsts',
+                  ],
+                ),
+
+                MemoryItem(
+                  title: 'The Day We Met',
+                  description:
+                  'A simple coffee turned into the beginning of something beautiful.',
+                  date: DateTime(2024, 3, 15),
+                  folder: 'Our Story',
+                  location: 'Café',
+                  tags: const [
+                    'Firsts',
+                  ],
+                ),
+
+                MemoryItem(
+                  title: 'Birthday Together',
+                  description:
+                  'Cake, candles, silly pictures and a night we did not want to end.',
+                  date: DateTime(2023, 11, 8),
+                  folder: 'Celebrations',
+                  location: 'Home',
+                  tags: const [
+                    'Birthday',
+                    'Love',
+                  ],
+                ),
+              ],
+            );
           },
         ),
 
