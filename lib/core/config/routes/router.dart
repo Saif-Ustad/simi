@@ -4,6 +4,7 @@ import 'package:simi/presentation/period/pages/period_setup_screen.dart';
 import '../../../common/widgets/app_bottom_navigation.dart';
 import '../../../presentation/chat/pages/love_chat_screen.dart';
 import '../../../presentation/home/pages/home_screen.dart';
+import '../../../presentation/memories/pages/create_memory_screen.dart';
 import '../../../presentation/memories/pages/memories_screen.dart';
 import '../../../presentation/memories/pages/memory_detail_screen.dart';
 import '../../../presentation/more/pages/more_screen.dart';
@@ -45,6 +46,7 @@ class AppRoutes {
 
   static const String memories = '/memories';
   static const String memoryDetail = '/memories/detail';
+  static const String createMemory = '/memories/create';
 
   static const String period = '/period';
   static const String periodSetup = '/period/setup';
@@ -469,6 +471,10 @@ final GoRouter router = GoRouter(
           onMemoryTap: (memory) {
             context.push(AppRoutes.memoryDetail, extra: memory);
           },
+
+          onCreateMemory: () {
+            context.push(AppRoutes.createMemory);
+          },
         );
       },
     ),
@@ -479,6 +485,29 @@ final GoRouter router = GoRouter(
         final memory = state.extra as MemoryItem;
 
         return MemoryDetailScreen(memory: memory);
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.createMemory,
+      builder: (context, state) {
+        return CreateMemoryScreen(
+          collections: const [
+            'Our Travels',
+            'Date Nights',
+            'Special Moments',
+          ],
+          onSave: (data) {
+            // We'll connect this to your memory storage later.
+            debugPrint(data.title);
+            debugPrint(data.photos.length.toString());
+            debugPrint(data.coverPhoto?.path);
+            debugPrint(data.collection);
+          },
+          onCreateCollection: (name) {
+            debugPrint('Created collection: $name');
+          },
+        );
       },
     ),
   ],
