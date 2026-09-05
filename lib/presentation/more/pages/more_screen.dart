@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:simi/core/config/routes/router.dart';
 
 import '../../../common/widgets/app_profile_avatar.dart';
 import '../../../core/config/theme/app_colors.dart';
@@ -111,7 +113,7 @@ class MoreScreen extends StatelessWidget {
                         subtitle: 'Requires authentication',
                         backgroundColor: const Color(0xFFE8E4E2),
                         onTap: () {
-                          debugPrint('Private Photos Vault');
+                          context.push(AppRoutes.privateVault);
                         },
                       ),
                     ]),
