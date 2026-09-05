@@ -4,7 +4,10 @@ import 'package:simi/presentation/period/pages/period_setup_screen.dart';
 import '../../../common/widgets/app_bottom_navigation.dart';
 import '../../../presentation/chat/pages/love_chat_screen.dart';
 import '../../../presentation/home/pages/home_screen.dart';
+import '../../../presentation/memories/pages/collection_detail_screen.dart';
+import '../../../presentation/memories/pages/create_collection_screen.dart';
 import '../../../presentation/memories/pages/create_memory_screen.dart';
+import '../../../presentation/memories/pages/edit_memory_screen.dart';
 import '../../../presentation/memories/pages/memories_screen.dart';
 import '../../../presentation/memories/pages/memory_detail_screen.dart';
 import '../../../presentation/more/pages/more_screen.dart';
@@ -47,6 +50,10 @@ class AppRoutes {
   static const String memories = '/memories';
   static const String memoryDetail = '/memories/detail';
   static const String createMemory = '/memories/create';
+  static const String editMemory = '/memories/edit';
+  static const String createCollection = '/memories/collection/create';
+  static const String collectionDetail = '/memories/collection/detail';
+  static const String editCollection = '/memories/collection/edit';
 
   static const String period = '/period';
   static const String periodSetup = '/period/setup';
@@ -403,77 +410,248 @@ final GoRouter router = GoRouter(
     //   },
     // ),
 
+    // GoRoute(
+    //   path: AppRoutes.memories,
+    //   builder: (context, state) {
+    //     return MemoriesScreen(
+    //       memories: [
+    //         MemoryItem(
+    //           title: 'Our First Trip',
+    //           description: 'Our first adventure together.',
+    //           date: DateTime(2025, 8, 12),
+    //           folder: 'Travel',
+    //           location: 'Goa',
+    //
+    //           coverImage: const AssetImage(
+    //             'assets/images/memories/goa_cover.png',
+    //           ),
+    //           images: const [
+    //             AssetImage('assets/images/memories/goa_cover.png'),
+    //             AssetImage('assets/images/memories/goa_2.png'),
+    //             AssetImage('assets/images/memories/goa_3.png'),
+    //           ],
+    //
+    //           tags: const ['Travel', 'Special'],
+    //         ),
+    //         MemoryItem(
+    //           title: 'The Proposal',
+    //           description:
+    //               'The moment everything changed. A memory we will carry with us forever.',
+    //           date: DateTime(2024, 12, 24),
+    //           folder: 'Our Story',
+    //           location: 'Mumbai',
+    //           tags: const ['Special', 'Love'],
+    //         ),
+    //
+    //         MemoryItem(
+    //           title: 'Our First Trip',
+    //           description:
+    //               'We got lost, laughed too much, ate amazing food and somehow made the perfect day.',
+    //           date: DateTime(2024, 8, 12),
+    //           folder: 'Travel',
+    //           location: 'Paris',
+    //           tags: const ['Travel', 'Firsts'],
+    //         ),
+    //
+    //         MemoryItem(
+    //           title: 'The Day We Met',
+    //           description:
+    //               'A simple coffee turned into the beginning of something beautiful.',
+    //           date: DateTime(2024, 3, 15),
+    //           folder: 'Our Story',
+    //           location: 'Café',
+    //           tags: const ['Firsts'],
+    //         ),
+    //
+    //         MemoryItem(
+    //           title: 'Birthday Together',
+    //           description:
+    //               'Cake, candles, silly pictures and a night we did not want to end.',
+    //           date: DateTime(2023, 11, 8),
+    //           folder: 'Celebrations',
+    //           location: 'Home',
+    //           tags: const ['Birthday', 'Love'],
+    //         ),
+    //       ],
+    //
+    //       // ADD THIS
+    //       onMemoryTap: (memory) {
+    //         context.push(AppRoutes.memoryDetail, extra: memory);
+    //       },
+    //
+    //       onCreateMemory: () {
+    //         context.push(AppRoutes.createMemory);
+    //       },
+    //
+    //       onFolderTap: (folder) {
+    //         context.push(
+    //           AppRoutes.collectionDetail,
+    //           extra: CollectionDetailArgs(
+    //             collection: folder,
+    //             memories: [
+    //               MemoryItem(
+    //                 title: 'Our First Trip',
+    //                 description: 'Our first adventure together.',
+    //                 date: DateTime(2025, 8, 12),
+    //                 folder: 'Travel',
+    //                 location: 'Goa',
+    //                 coverImage: const AssetImage(
+    //                   'assets/images/memories/goa_cover.png',
+    //                 ),
+    //                 images: const [
+    //                   AssetImage(
+    //                     'assets/images/memories/goa_cover.png',
+    //                   ),
+    //                   AssetImage(
+    //                     'assets/images/memories/goa_2.png',
+    //                   ),
+    //                   AssetImage(
+    //                     'assets/images/memories/goa_3.png',
+    //                   ),
+    //                 ],
+    //                 tags: const ['Travel', 'Special'],
+    //               ),
+    //
+    //               MemoryItem(
+    //                 title: 'The Proposal',
+    //                 description:
+    //                 'The moment everything changed. A memory we will carry with us forever.',
+    //                 date: DateTime(2024, 12, 24),
+    //                 folder: 'Our Story',
+    //                 location: 'Mumbai',
+    //                 tags: const ['Special', 'Love'],
+    //               ),
+    //
+    //                MemoryItem(
+    //                 title: 'Our First Trip',
+    //                 description:
+    //                 'We got lost, laughed too much, ate amazing food and somehow made the perfect day.',
+    //                 date: DateTime(2024, 8, 12),
+    //                 folder: 'Travel',
+    //                 location: 'Paris',
+    //                 tags: ['Travel', 'Firsts'],
+    //               ),
+    //
+    //                MemoryItem(
+    //                 title: 'The Day We Met',
+    //                 description:
+    //                 'A simple coffee turned into the beginning of something beautiful.',
+    //                 date: DateTime(2024, 3, 15),
+    //                 folder: 'Our Story',
+    //                 location: 'Café',
+    //                 tags: ['Firsts'],
+    //               ),
+    //
+    //                MemoryItem(
+    //                 title: 'Birthday Together',
+    //                 description:
+    //                 'Cake, candles, silly pictures and a night we did not want to end.',
+    //                 date: DateTime(2023, 11, 8),
+    //                 folder: 'Celebrations',
+    //                 location: 'Home',
+    //                 tags: ['Birthday', 'Love'],
+    //               ),
+    //             ],
+    //           ),
+    //         );
+    //       },
+    //
+    //
+    //     );
+    //   },
+    // ),
     GoRoute(
       path: AppRoutes.memories,
       builder: (context, state) {
+        // ============================================================
+        // ONE MEMORY LIST FOR NOW
+        // ============================================================
+        final memories = <MemoryItem>[
+          MemoryItem(
+            title: 'Our First Trip',
+            description: 'Our first adventure together.',
+            date: DateTime(2025, 8, 12),
+            folder: 'Travel',
+            location: 'Goa',
+            coverImage: const AssetImage(
+              'assets/images/memories/goa_cover.png',
+            ),
+            images: const [
+              AssetImage('assets/images/memories/goa_2.png'),
+              AssetImage('assets/images/memories/goa_3.png'),
+            ],
+            tags: const ['Travel', 'Special'],
+          ),
+
+          MemoryItem(
+            title: 'Paris Together',
+            description:
+                'We got lost, laughed too much, ate amazing food and '
+                'somehow made the perfect day.',
+            date: DateTime(2024, 8, 12),
+            folder: 'Travel',
+            location: 'Paris',
+            tags: const ['Travel', 'Firsts'],
+          ),
+
+          MemoryItem(
+            title: 'The Proposal',
+            description:
+                'The moment everything changed. A memory we will carry '
+                'with us forever.',
+            date: DateTime(2024, 12, 24),
+            folder: 'Our Story',
+            location: 'Mumbai',
+            tags: const ['Special', 'Love'],
+          ),
+
+          MemoryItem(
+            title: 'The Day We Met',
+            description:
+                'A simple coffee turned into the beginning of something '
+                'beautiful.',
+            date: DateTime(2024, 3, 15),
+            folder: 'Our Story',
+            location: 'Café',
+            tags: const ['Firsts'],
+          ),
+
+          MemoryItem(
+            title: 'Birthday Together',
+            description:
+                'Cake, candles, silly pictures and a night we did not '
+                'want to end.',
+            date: DateTime(2023, 11, 8),
+            folder: 'Celebrations',
+            location: 'Home',
+            tags: const ['Birthday', 'Love'],
+          ),
+        ];
+
         return MemoriesScreen(
-          memories: [
-            MemoryItem(
-              title: 'Our First Trip',
-              description: 'Our first adventure together.',
-              date: DateTime(2025, 8, 12),
-              folder: 'Travel',
-              location: 'Goa',
+          memories: memories,
 
-              coverImage: const AssetImage(
-                'assets/images/memories/goa_cover.png',
-              ),
-              images: const [
-                AssetImage('assets/images/memories/goa_cover.png'),
-                AssetImage('assets/images/memories/goa_2.png'),
-                AssetImage('assets/images/memories/goa_3.png'),
-              ],
-
-              tags: const ['Travel', 'Special'],
-            ),
-            MemoryItem(
-              title: 'The Proposal',
-              description:
-                  'The moment everything changed. A memory we will carry with us forever.',
-              date: DateTime(2024, 12, 24),
-              folder: 'Our Story',
-              location: 'Mumbai',
-              tags: const ['Special', 'Love'],
-            ),
-
-            MemoryItem(
-              title: 'Our First Trip',
-              description:
-                  'We got lost, laughed too much, ate amazing food and somehow made the perfect day.',
-              date: DateTime(2024, 8, 12),
-              folder: 'Travel',
-              location: 'Paris',
-              tags: const ['Travel', 'Firsts'],
-            ),
-
-            MemoryItem(
-              title: 'The Day We Met',
-              description:
-                  'A simple coffee turned into the beginning of something beautiful.',
-              date: DateTime(2024, 3, 15),
-              folder: 'Our Story',
-              location: 'Café',
-              tags: const ['Firsts'],
-            ),
-
-            MemoryItem(
-              title: 'Birthday Together',
-              description:
-                  'Cake, candles, silly pictures and a night we did not want to end.',
-              date: DateTime(2023, 11, 8),
-              folder: 'Celebrations',
-              location: 'Home',
-              tags: const ['Birthday', 'Love'],
-            ),
-          ],
-
-          // ADD THIS
+          // MEMORY DETAIL
           onMemoryTap: (memory) {
             context.push(AppRoutes.memoryDetail, extra: memory);
           },
 
+          // CREATE MEMORY
           onCreateMemory: () {
             context.push(AppRoutes.createMemory);
+          },
+
+          // COLLECTION DETAIL
+          onFolderTap: (folder) {
+            context.push(
+              AppRoutes.collectionDetail,
+              extra: CollectionDetailArgs(
+                collection: folder,
+
+                // Send the SAME memory list.
+                memories: memories,
+              ),
+            );
           },
         );
       },
@@ -484,7 +662,10 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final memory = state.extra as MemoryItem;
 
-        return MemoryDetailScreen(memory: memory);
+        return MemoryDetailScreen(
+          memory: memory,
+          onEdit: () => {context.push(AppRoutes.editMemory, extra: memory)},
+        );
       },
     ),
 
@@ -492,11 +673,7 @@ final GoRouter router = GoRouter(
       path: AppRoutes.createMemory,
       builder: (context, state) {
         return CreateMemoryScreen(
-          collections: const [
-            'Our Travels',
-            'Date Nights',
-            'Special Moments',
-          ],
+          collections: const ['Our Travels', 'Date Nights', 'Special Moments'],
           onSave: (data) {
             // We'll connect this to your memory storage later.
             debugPrint(data.title);
@@ -510,5 +687,162 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+
+    GoRoute(
+      path: AppRoutes.editMemory,
+      builder: (context, state) {
+        final memory = state.extra as MemoryItem;
+
+        return EditMemoryScreen(
+          memory: memory,
+
+          collections: const ['Travel', 'Our Story', 'Celebrations'],
+
+          onSave: (data) {
+            debugPrint('Updated memory: ${data.title}');
+
+            debugPrint('Collection: ${data.collection}');
+
+            debugPrint(
+              'Photos: ${data.existingPhotos.length + data.newPhotos.length}',
+            );
+
+            debugPrint('Tags: ${data.tags}');
+
+            // Later:
+            // update the repository/database here.
+          },
+
+          onDelete: () {
+            debugPrint('Deleted memory: ${memory.title}');
+
+            // Later:
+            // delete from repository/database here.
+          },
+        );
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.createCollection,
+      builder: (context, state) {
+        return CreateCollectionScreen(
+          onSave: (data) {
+            // Later connect this to your repository/database.
+          },
+        );
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.collectionDetail,
+      builder: (context, state) {
+        final extra = state.extra as CollectionDetailArgs;
+
+        // ============================================================
+        // TEMPORARY CENTRAL MEMORY LIST
+        // Keep this here for now.
+        // Later we can move it to a repository/database.
+        // ============================================================
+        final allMemories = <MemoryItem>[
+          MemoryItem(
+            title: 'Our First Trip',
+            description:
+                'Our first adventure together. So many little moments '
+                'that turned into one beautiful memory.',
+            date: DateTime(2025, 8, 12),
+            folder: 'Travel',
+            location: 'Goa',
+            tags: const ['Travel', 'Special'],
+          ),
+
+          MemoryItem(
+            title: 'Paris Together',
+            description:
+                'We got lost, laughed too much, ate amazing food and '
+                'somehow made the perfect day.',
+            date: DateTime(2024, 8, 12),
+            folder: 'Travel',
+            location: 'Paris',
+            tags: const ['Travel', 'Firsts'],
+          ),
+
+          MemoryItem(
+            title: 'The Proposal',
+            description:
+                'The moment everything changed. A memory we will carry '
+                'with us forever.',
+            date: DateTime(2024, 12, 24),
+            folder: 'Our Story',
+            location: 'Mumbai',
+            tags: const ['Special', 'Love'],
+          ),
+
+          MemoryItem(
+            title: 'The Day We Met',
+            description:
+                'A simple coffee turned into the beginning of something '
+                'beautiful.',
+            date: DateTime(2024, 3, 15),
+            folder: 'Our Story',
+            location: 'Café',
+            tags: const ['Firsts'],
+          ),
+
+          MemoryItem(
+            title: 'Birthday Together',
+            description:
+                'Cake, candles, silly pictures and a night we did not '
+                'want to end.',
+            date: DateTime(2023, 11, 8),
+            folder: 'Celebrations',
+            location: 'Home',
+            tags: const ['Birthday', 'Love'],
+          ),
+        ];
+
+        // Only memories belonging to the selected collection.
+        final collectionMemories =
+            allMemories
+                .where((memory) => memory.folder == extra.collection.name)
+                .toList();
+
+        return CollectionDetailScreen(
+          collection: extra.collection,
+
+          // IMPORTANT:
+          // Use the memories we just created above.
+          memories: collectionMemories,
+
+          onMemoryTap: (memory) {
+            context.push(AppRoutes.memoryDetail, extra: memory);
+          },
+
+          onAddMemory: () {
+            context.push(AppRoutes.createMemory, extra: extra.collection.name);
+          },
+
+          onCollectionUpdated: (updatedCollection) {
+            debugPrint('Collection updated: ${updatedCollection.name}');
+          },
+
+          onCollectionDeleted: () {
+            debugPrint('Collection deleted: ${extra.collection.name}');
+
+            context.pop();
+          },
+        );
+      },
+    ),
   ],
 );
+
+class CollectionDetailArgs {
+  const CollectionDetailArgs({
+    required this.collection,
+    required this.memories,
+  });
+
+  final MemoryFolder collection;
+  final List<MemoryItem> memories;
+}

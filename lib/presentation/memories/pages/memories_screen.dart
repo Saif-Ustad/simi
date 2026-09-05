@@ -1617,8 +1617,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../core/config/routes/router.dart';
 import '../../../core/config/theme/app_colors.dart';
 import '../../../core/config/theme/app_text_theme.dart';
 
@@ -2046,21 +2048,64 @@ class _MemoriesScreenState extends State<MemoriesScreen>
         _CreateAlbumCard(
           onTap: () {
             // Later:
-            // context.push(AppRoutes.createAlbum);
+            context.push(AppRoutes.createCollection);
           },
         ),
       ],
     );
   }
 
+  // List<MemoryFolder> _createFolders() {
+  //   final map = <String, List<MemoryItem>>{};
+  //
+  //   for (final memory in widget.memories) {
+  //     map.putIfAbsent(
+  //       memory.folder,
+  //           () => [],
+  //     ).add(memory);
+  //   }
+  //
+  //   return map.entries.map((entry) {
+  //     final items = entry.value;
+  //
+  //     ImageProvider? albumCover;
+  //
+  //     // 1. Prefer an explicitly selected cover image.
+  //     for (final memory in items) {
+  //       if (memory.coverImage != null) {
+  //         albumCover = memory.coverImage;
+  //         break;
+  //       }
+  //     }
+  //
+  //     // 2. If no cover exists, use the first available image.
+  //     albumCover ??= items
+  //         .map((memory) => memory.displayImage)
+  //         .whereType<ImageProvider>()
+  //         .firstOrNull;
+  //
+  //     // 3. If there are no images at all,
+  //     //    albumCover remains null and the heart placeholder is shown.
+  //     return MemoryFolder(
+  //       name: entry.key,
+  //       count: items.length,
+  //       coverImage: albumCover,
+  //       description: '',
+  //       tags: const [],
+  //       createdAt: items.isNotEmpty
+  //           ? items.map((e) => e.date).reduce(
+  //             (a, b) => a.isBefore(b) ? a : b,
+  //       )
+  //           : null,
+  //     );
+  //   }).toList();
+  // }
+
   List<MemoryFolder> _createFolders() {
     final map = <String, List<MemoryItem>>{};
 
     for (final memory in widget.memories) {
-      map.putIfAbsent(
-        memory.folder,
-            () => [],
-      ).add(memory);
+      map.putIfAbsent(memory.folder, () => []).add(memory);
     }
 
     return map.entries.map((entry) {
@@ -2068,7 +2113,7 @@ class _MemoriesScreenState extends State<MemoriesScreen>
 
       ImageProvider? albumCover;
 
-      // 1. Prefer an explicitly selected cover image.
+      // 1. Prefer explicit cover image.
       for (final memory in items) {
         if (memory.coverImage != null) {
           albumCover = memory.coverImage;
@@ -2076,14 +2121,18 @@ class _MemoriesScreenState extends State<MemoriesScreen>
         }
       }
 
-      // 2. If no cover exists, use the first available image.
-      albumCover ??= items
-          .map((memory) => memory.displayImage)
-          .whereType<ImageProvider>()
-          .firstOrNull;
+      // 2. Fallback to any available memory image.
+      if (albumCover == null) {
+        for (final memory in items) {
+          final image = memory.displayImage;
 
-      // 3. If there are no images at all,
-      //    albumCover remains null and the heart placeholder is shown.
+          if (image != null) {
+            albumCover = image;
+            break;
+          }
+        }
+      }
+
       return MemoryFolder(
         name: entry.key,
         count: items.length,
@@ -3213,16 +3262,24 @@ class MemoryItem {
   }
 }
 
+
 class MemoryFolder {
   const MemoryFolder({
     required this.name,
     required this.count,
     this.coverImage,
+    this.description = '',
+    this.tags = const [],
+    this.createdAt,
   });
 
   final String name;
   final int count;
   final ImageProvider? coverImage;
+
+  final String description;
+  final List<String> tags;
+  final DateTime? createdAt;
 }
 
 class _MemoryModeButton extends StatelessWidget {

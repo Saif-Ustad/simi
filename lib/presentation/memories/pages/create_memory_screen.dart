@@ -1911,9 +1911,9 @@ class _LocationSheet extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        20,
-        10,
-        20,
+        0,
+        0,
+        0,
         20 + MediaQuery.viewInsetsOf(context).bottom,
       ),
       child: Container(
