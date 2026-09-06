@@ -7,6 +7,11 @@ import '../../../presentation/chat/pages/create_chat_screen.dart';
 import '../../../presentation/chat/pages/custom_chat_screen.dart';
 import '../../../presentation/chat/pages/love_chat_conversation_screen.dart';
 import '../../../presentation/chat/pages/love_chat_screen.dart';
+import '../../../presentation/gift_wishes/create_gift_wish_screen.dart';
+import '../../../presentation/gift_wishes/edit_gift_wish_screen.dart';
+import '../../../presentation/gift_wishes/gift_wish_categories_screen.dart';
+import '../../../presentation/gift_wishes/gift_wish_detail_screen.dart';
+import '../../../presentation/gift_wishes/gift_wishes_home_screen.dart';
 import '../../../presentation/home/pages/home_screen.dart';
 import '../../../presentation/memories/pages/collection_detail_screen.dart';
 import '../../../presentation/memories/pages/create_collection_screen.dart';
@@ -87,7 +92,6 @@ class AppRoutes {
   static const String chatConversation = '/chat/conversation';
   static const String chatDetails = '/chat/details';
 
-
   static const String more = '/more';
 
   static const String privateVault = '/private-vault';
@@ -96,7 +100,11 @@ class AppRoutes {
   static const String privateVaultItemDetail = '/private-vault/item-detail';
   static const String privateVaultSettings = '/private-vault/settings';
 
-
+  static const String giftWishes = '/gift-wishes';
+  static const String createGiftWish = '/gift-wishes/create';
+  static const String giftWishDetail = '/gift-wishes/detail';
+  static const String editGiftWish = '/gift-wishes/edit';
+  static const String giftWishCategories = '/gift-wishes/categories';
 }
 
 final GoRouter router = GoRouter(
@@ -402,8 +410,7 @@ final GoRouter router = GoRouter(
                 id: '1',
                 title: 'Our Future',
                 subtitle: '✨ Future',
-                lastMessage:
-                'I think Japan would be perfect for us next year.',
+                lastMessage: 'I think Japan would be perfect for us next year.',
                 lastMessageAt: DateTime.now().subtract(
                   const Duration(minutes: 18),
                 ),
@@ -418,7 +425,7 @@ final GoRouter router = GoRouter(
                 title: 'Late Night Thoughts',
                 subtitle: '🌙 Deep',
                 lastMessage:
-                'There is something I have been wanting to tell you...',
+                    'There is something I have been wanting to tell you...',
                 lastMessageAt: DateTime.now().subtract(
                   const Duration(hours: 9),
                 ),
@@ -431,10 +438,8 @@ final GoRouter router = GoRouter(
                 title: 'Things I Love About You',
                 subtitle: '💕 Appreciation',
                 lastMessage:
-                'I still love the way you get excited about little things.',
-                lastMessageAt: DateTime.now().subtract(
-                  const Duration(days: 2),
-                ),
+                    'I still love the way you get excited about little things.',
+                lastMessageAt: DateTime.now().subtract(const Duration(days: 2)),
                 messageCount: 31,
                 icon: Icons.favorite_rounded,
                 isFavorite: true,
@@ -444,11 +449,8 @@ final GoRouter router = GoRouter(
                 id: '4',
                 title: 'Dream Trips',
                 subtitle: '✈️ Adventures',
-                lastMessage:
-                'Okay, adding Switzerland to our list.',
-                lastMessageAt: DateTime.now().subtract(
-                  const Duration(days: 6),
-                ),
+                lastMessage: 'Okay, adding Switzerland to our list.',
+                lastMessageAt: DateTime.now().subtract(const Duration(days: 6)),
                 messageCount: 24,
                 icon: Icons.flight_takeoff_rounded,
               ),
@@ -458,10 +460,7 @@ final GoRouter router = GoRouter(
               chats: chats,
 
               onChatTap: (chat) {
-                context.push(
-                  AppRoutes.chatConversation,
-                  extra: chat,
-                );
+                context.push(AppRoutes.chatConversation, extra: chat);
               },
 
               onCreateChat: () {
@@ -621,9 +620,7 @@ final GoRouter router = GoRouter(
               },
 
               onSettings: () {
-                context.push(
-                  AppRoutes.privateVaultSettings,
-                );
+                context.push(AppRoutes.privateVaultSettings);
               },
 
               onMemoriesTap: () {
@@ -811,156 +808,6 @@ final GoRouter router = GoRouter(
     //   },
     // ),
 
-    // GoRoute(
-    //   path: AppRoutes.memories,
-    //   builder: (context, state) {
-    //     return MemoriesScreen(
-    //       memories: [
-    //         MemoryItem(
-    //           title: 'Our First Trip',
-    //           description: 'Our first adventure together.',
-    //           date: DateTime(2025, 8, 12),
-    //           folder: 'Travel',
-    //           location: 'Goa',
-    //
-    //           coverImage: const AssetImage(
-    //             'assets/images/memories/goa_cover.png',
-    //           ),
-    //           images: const [
-    //             AssetImage('assets/images/memories/goa_cover.png'),
-    //             AssetImage('assets/images/memories/goa_2.png'),
-    //             AssetImage('assets/images/memories/goa_3.png'),
-    //           ],
-    //
-    //           tags: const ['Travel', 'Special'],
-    //         ),
-    //         MemoryItem(
-    //           title: 'The Proposal',
-    //           description:
-    //               'The moment everything changed. A memory we will carry with us forever.',
-    //           date: DateTime(2024, 12, 24),
-    //           folder: 'Our Story',
-    //           location: 'Mumbai',
-    //           tags: const ['Special', 'Love'],
-    //         ),
-    //
-    //         MemoryItem(
-    //           title: 'Our First Trip',
-    //           description:
-    //               'We got lost, laughed too much, ate amazing food and somehow made the perfect day.',
-    //           date: DateTime(2024, 8, 12),
-    //           folder: 'Travel',
-    //           location: 'Paris',
-    //           tags: const ['Travel', 'Firsts'],
-    //         ),
-    //
-    //         MemoryItem(
-    //           title: 'The Day We Met',
-    //           description:
-    //               'A simple coffee turned into the beginning of something beautiful.',
-    //           date: DateTime(2024, 3, 15),
-    //           folder: 'Our Story',
-    //           location: 'Café',
-    //           tags: const ['Firsts'],
-    //         ),
-    //
-    //         MemoryItem(
-    //           title: 'Birthday Together',
-    //           description:
-    //               'Cake, candles, silly pictures and a night we did not want to end.',
-    //           date: DateTime(2023, 11, 8),
-    //           folder: 'Celebrations',
-    //           location: 'Home',
-    //           tags: const ['Birthday', 'Love'],
-    //         ),
-    //       ],
-    //
-    //       // ADD THIS
-    //       onMemoryTap: (memory) {
-    //         context.push(AppRoutes.memoryDetail, extra: memory);
-    //       },
-    //
-    //       onCreateMemory: () {
-    //         context.push(AppRoutes.createMemory);
-    //       },
-    //
-    //       onFolderTap: (folder) {
-    //         context.push(
-    //           AppRoutes.collectionDetail,
-    //           extra: CollectionDetailArgs(
-    //             collection: folder,
-    //             memories: [
-    //               MemoryItem(
-    //                 title: 'Our First Trip',
-    //                 description: 'Our first adventure together.',
-    //                 date: DateTime(2025, 8, 12),
-    //                 folder: 'Travel',
-    //                 location: 'Goa',
-    //                 coverImage: const AssetImage(
-    //                   'assets/images/memories/goa_cover.png',
-    //                 ),
-    //                 images: const [
-    //                   AssetImage(
-    //                     'assets/images/memories/goa_cover.png',
-    //                   ),
-    //                   AssetImage(
-    //                     'assets/images/memories/goa_2.png',
-    //                   ),
-    //                   AssetImage(
-    //                     'assets/images/memories/goa_3.png',
-    //                   ),
-    //                 ],
-    //                 tags: const ['Travel', 'Special'],
-    //               ),
-    //
-    //               MemoryItem(
-    //                 title: 'The Proposal',
-    //                 description:
-    //                 'The moment everything changed. A memory we will carry with us forever.',
-    //                 date: DateTime(2024, 12, 24),
-    //                 folder: 'Our Story',
-    //                 location: 'Mumbai',
-    //                 tags: const ['Special', 'Love'],
-    //               ),
-    //
-    //                MemoryItem(
-    //                 title: 'Our First Trip',
-    //                 description:
-    //                 'We got lost, laughed too much, ate amazing food and somehow made the perfect day.',
-    //                 date: DateTime(2024, 8, 12),
-    //                 folder: 'Travel',
-    //                 location: 'Paris',
-    //                 tags: ['Travel', 'Firsts'],
-    //               ),
-    //
-    //                MemoryItem(
-    //                 title: 'The Day We Met',
-    //                 description:
-    //                 'A simple coffee turned into the beginning of something beautiful.',
-    //                 date: DateTime(2024, 3, 15),
-    //                 folder: 'Our Story',
-    //                 location: 'Café',
-    //                 tags: ['Firsts'],
-    //               ),
-    //
-    //                MemoryItem(
-    //                 title: 'Birthday Together',
-    //                 description:
-    //                 'Cake, candles, silly pictures and a night we did not want to end.',
-    //                 date: DateTime(2023, 11, 8),
-    //                 folder: 'Celebrations',
-    //                 location: 'Home',
-    //                 tags: ['Birthday', 'Love'],
-    //               ),
-    //             ],
-    //           ),
-    //         );
-    //       },
-    //
-    //
-    //     );
-    //   },
-    // ),
     GoRoute(
       path: AppRoutes.memoryDetail,
       builder: (context, state) {
@@ -1139,8 +986,6 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
-
     GoRoute(
       path: AppRoutes.privateVaultFeature,
       builder: (context, state) {
@@ -1175,7 +1020,6 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.addToPrivateVault,
       builder: (context, state) {
@@ -1190,7 +1034,7 @@ final GoRouter router = GoRouter(
             for (final item in items) {
               debugPrint(
                 'Adding ${item.title} '
-                    '(${item.type}) to private vault',
+                '(${item.type}) to private vault',
               );
             }
 
@@ -1199,7 +1043,6 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.privateVaultItemDetail,
@@ -1234,8 +1077,6 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
-
     GoRoute(
       path: AppRoutes.privateVaultSettings,
       builder: (context, state) {
@@ -1259,27 +1100,19 @@ final GoRouter router = GoRouter(
           },
 
           onBiometricChanged: (enabled) {
-            debugPrint(
-              'Biometric unlock: $enabled',
-            );
+            debugPrint('Biometric unlock: $enabled');
           },
 
           onHidePreviewsChanged: (enabled) {
-            debugPrint(
-              'Hide previews: $enabled',
-            );
+            debugPrint('Hide previews: $enabled');
           },
 
           onPrivateNotificationsChanged: (enabled) {
-            debugPrint(
-              'Private notifications: $enabled',
-            );
+            debugPrint('Private notifications: $enabled');
           },
 
           onAutoLockChanged: (value) {
-            debugPrint(
-              'Auto lock: ${value.label}',
-            );
+            debugPrint('Auto lock: ${value.label}');
           },
 
           onClearCache: () {
@@ -1292,7 +1125,6 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.createChat,
@@ -1307,7 +1139,6 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.customChat,
@@ -1336,39 +1167,28 @@ final GoRouter router = GoRouter(
           messages: [
             LoveChatMessage(
               text: 'I think Japan would be perfect for us next year.',
-              time: DateTime.now().subtract(
-                const Duration(minutes: 32),
-              ),
+              time: DateTime.now().subtract(const Duration(minutes: 32)),
               isMine: false,
             ),
             LoveChatMessage(
               text: 'Japan? 😭❤️',
-              time: DateTime.now().subtract(
-                const Duration(minutes: 29),
-              ),
+              time: DateTime.now().subtract(const Duration(minutes: 29)),
               isMine: true,
             ),
             LoveChatMessage(
               text: 'Yes. Imagine us walking through Kyoto together.',
-              time: DateTime.now().subtract(
-                const Duration(minutes: 27),
-              ),
+              time: DateTime.now().subtract(const Duration(minutes: 27)),
               isMine: false,
             ),
             LoveChatMessage(
               text: 'Okay, now I really want to go.',
-              time: DateTime.now().subtract(
-                const Duration(minutes: 24),
-              ),
+              time: DateTime.now().subtract(const Duration(minutes: 24)),
               isMine: true,
             ),
           ],
           onBack: () => context.pop(),
           onDetails: () {
-            context.push(
-              AppRoutes.chatDetails,
-              extra: chat,
-            );
+            context.push(AppRoutes.chatDetails, extra: chat);
           },
           onSend: (message) {
             debugPrint('Sent: $message');
@@ -1376,7 +1196,6 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.chatDetails,
@@ -1386,41 +1205,325 @@ final GoRouter router = GoRouter(
         return ChatDetailsScreen(
           chat: chat,
           partnerName: 'Love',
-          createdAt: DateTime.now().subtract(
-            const Duration(days: 18),
-          ),
+          createdAt: DateTime.now().subtract(const Duration(days: 18)),
           onBack: () => context.pop(),
 
           onFavoriteChanged: (value) {
-            debugPrint(
-              'Favorite ${chat.title}: $value',
-            );
+            debugPrint('Favorite ${chat.title}: $value');
           },
 
           onRename: (name) {
-            debugPrint(
-              'Renamed ${chat.title} → $name',
-            );
+            debugPrint('Renamed ${chat.title} → $name');
           },
 
           onArchive: () {
-            debugPrint(
-              'Archived: ${chat.title}',
-            );
+            debugPrint('Archived: ${chat.title}');
             context.pop();
           },
 
           onClearMessages: () {
+            debugPrint('Cleared messages: ${chat.title}');
+          },
+
+          onDelete: () {
+            debugPrint('Deleted: ${chat.title}');
+            context.pop();
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.giftWishes,
+      builder: (context, state) {
+        final wishes = <GiftWishItem>[
+          GiftWishItem(
+            id: '1',
+            title: 'Sony Headphones',
+            description:
+            'The ones I keep looking at every time we go shopping.',
+            category: 'Tech',
+            priority: GiftWishPriority.wouldLove,
+            status: GiftWishStatus.wished,
+            owner: GiftWishOwner.me,
+            addedAt: DateTime.now().subtract(
+              const Duration(days: 2),
+            ),
+            price: 24999,
+            // image: const AssetImage(
+            //   'assets/images/gift_wishes/headphones.jpg',
+            // ),
+            isFavorite: true,
+          ),
+
+          GiftWishItem(
+            id: '2',
+            title: 'That little perfume',
+            description:
+            'I smelled this once and absolutely loved it.',
+            category: 'Beauty',
+            priority: GiftWishPriority.reallyWant,
+            status: GiftWishStatus.planned,
+            owner: GiftWishOwner.love,
+            addedAt: DateTime.now().subtract(
+              const Duration(days: 5),
+            ),
+            price: 6800,
+          ),
+
+          GiftWishItem(
+            id: '3',
+            title: 'A weekend in the mountains',
+            description:
+            'Not really a thing. Just somewhere I want us to go.',
+            category: 'Travel',
+            priority: GiftWishPriority.wouldLove,
+            status: GiftWishStatus.wished,
+            owner: GiftWishOwner.me,
+            addedAt: DateTime.now().subtract(
+              const Duration(days: 11),
+            ),
+          ),
+
+          GiftWishItem(
+            id: '4',
+            title: 'The book you mentioned',
+            description:
+            'You said you wanted to read this one.',
+            category: 'Books',
+            priority: GiftWishPriority.thought,
+            status: GiftWishStatus.gifted,
+            owner: GiftWishOwner.love,
+            addedAt: DateTime.now().subtract(
+              const Duration(days: 20),
+            ),
+            price: 799,
+          ),
+        ];
+
+        return GiftWishesHomeScreen(
+          wishes: wishes,
+
+          onWishTap: (wish) {
+            context.push(
+              AppRoutes.giftWishDetail,
+              extra: wish,
+            );
+          },
+
+          onCreateWish: () {
+            context.push(
+              AppRoutes.createGiftWish,
+            );
+          },
+
+          onSearch: (query) {
+            debugPrint('Gift wish search: $query');
+          },
+
+          onFavoriteChanged: (wish) {
             debugPrint(
-              'Cleared messages: ${chat.title}',
+              'Favorite changed: ${wish.title}',
+            );
+          },
+
+          onFilterChanged: (filter) {
+            debugPrint(
+              'Gift wish filter: $filter',
+            );
+          },
+
+          onCategories: () {
+            context.push(
+              AppRoutes.giftWishCategories,
+            );
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.createGiftWish,
+      builder: (context, state) {
+        return CreateGiftWishScreen(
+          onBack: () => context.pop(),
+          onSave: (data) {
+            debugPrint('Wish: ${data.title}');
+            debugPrint('Category: ${data.category}');
+            debugPrint('Priority: ${data.priority}');
+            debugPrint('Owner: ${data.owner}');
+            debugPrint('Price: ${data.price}');
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.giftWishDetail,
+      builder: (context, state) {
+        final wish = state.extra as GiftWishItem;
+
+        return GiftWishDetailScreen(
+          wish: wish,
+
+          onBack: () => context.pop(),
+
+          onEdit: () {
+            debugPrint('Edit wish: ${wish.title}');
+
+            context.push(
+              AppRoutes.editGiftWish,
+              extra: wish,
             );
           },
 
           onDelete: () {
-            debugPrint(
-              'Deleted: ${chat.title}',
-            );
+            debugPrint('Deleted wish: ${wish.title}');
             context.pop();
+          },
+
+          onFavoriteChanged: (value) {
+            debugPrint(
+              'Favorite ${wish.title}: $value',
+            );
+          },
+
+          onMarkAsPlanned: () {
+            debugPrint(
+              'Marked as planned: ${wish.title}',
+            );
+          },
+
+          onMarkAsGifted: () {
+            debugPrint(
+              'Marked as gifted: ${wish.title}',
+            );
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.editGiftWish,
+      builder: (context, state) {
+        final wish = state.extra as GiftWishItem;
+
+        return EditGiftWishScreen(
+          wish: wish,
+
+          onBack: () => context.pop(),
+
+          onSave: (data) {
+            debugPrint('Updated wish: ${data.title}');
+            debugPrint('Category: ${data.category}');
+            debugPrint('Priority: ${data.priority}');
+            debugPrint('Owner: ${data.owner}');
+            debugPrint('Price: ${data.price}');
+            debugPrint('Remove image: ${data.removeImage}');
+            debugPrint(
+              'New image: ${data.image?.path}',
+            );
+
+            // Later:
+            // repository.updateGiftWish(data);
+          },
+
+          onDelete: () {
+            debugPrint(
+              'Deleted wish: ${wish.title}',
+            );
+
+            context.pop();
+          },
+        );
+      },
+    ),
+
+
+    // --------------------------------------------------
+// GIFT WISH CATEGORIES
+// --------------------------------------------------
+    GoRoute(
+      path: AppRoutes.giftWishCategories,
+      builder: (context, state) {
+        final categories = <GiftWishCategory>[
+          const GiftWishCategory(
+            name: 'General',
+            subtitle: 'Little things that don’t need a box.',
+            icon: Icons.auto_awesome_rounded,
+            emoji: '✨',
+            count: 3,
+          ),
+          const GiftWishCategory(
+            name: 'Tech',
+            subtitle: 'Things with screens, buttons and wires.',
+            icon: Icons.devices_other_rounded,
+            emoji: '🎧',
+            count: 4,
+          ),
+          const GiftWishCategory(
+            name: 'Beauty',
+            subtitle: 'The little luxuries you secretly love.',
+            icon: Icons.spa_outlined,
+            emoji: '🌸',
+            count: 2,
+          ),
+          const GiftWishCategory(
+            name: 'Fashion',
+            subtitle: 'Things you would happily wear.',
+            icon: Icons.checkroom_outlined,
+            emoji: '👗',
+            count: 3,
+          ),
+          const GiftWishCategory(
+            name: 'Books',
+            subtitle: 'Stories waiting for the right moment.',
+            icon: Icons.menu_book_outlined,
+            emoji: '📚',
+            count: 2,
+          ),
+          const GiftWishCategory(
+            name: 'Travel',
+            subtitle: 'Places and experiences for us.',
+            icon: Icons.flight_takeoff_rounded,
+            emoji: '✈️',
+            count: 3,
+          ),
+          const GiftWishCategory(
+            name: 'Home',
+            subtitle: 'Things that make our little space ours.',
+            icon: Icons.home_outlined,
+            emoji: '🏡',
+            count: 1,
+          ),
+          const GiftWishCategory(
+            name: 'Experiences',
+            subtitle: 'Moments are sometimes the best gifts.',
+            icon: Icons.local_activity_outlined,
+            emoji: '🎟️',
+            count: 2,
+          ),
+        ];
+
+        return GiftWishCategoriesScreen(
+          categories: categories,
+
+          onBack: () {
+            context.pop();
+          },
+
+          onCreateWish: () {
+            context.push(AppRoutes.createGiftWish);
+          },
+
+          onCategoryTap: (category) {
+            debugPrint(
+              'Selected category: ${category.name}',
+            );
           },
         );
       },
@@ -1439,11 +1542,7 @@ class CollectionDetailArgs {
   final List<MemoryItem> memories;
 }
 
-
-
-List<VaultFeatureItem> getDummyVaultItems(
-    VaultFeatureType type,
-    ) {
+List<VaultFeatureItem> getDummyVaultItems(VaultFeatureType type) {
   switch (type) {
     case VaultFeatureType.memories:
       return [
@@ -1451,9 +1550,7 @@ List<VaultFeatureItem> getDummyVaultItems(
           title: 'Our First Trip',
           subtitle: 'Our little Goa adventure ❤️',
           dateLabel: '12 Aug 2025',
-          image: const AssetImage(
-            'assets/images/memories/goa_cover.png',
-          ),
+          image: const AssetImage('assets/images/memories/goa_cover.png'),
           isLocked: true,
         ),
         VaultFeatureItem(
@@ -1558,9 +1655,7 @@ List<VaultFeatureItem> getDummyVaultItems(
           title: 'Us ❤️',
           subtitle: 'Private photo',
           dateLabel: '12 Aug 2025',
-          image: const AssetImage(
-            'assets/images/memories/goa_cover.png',
-          ),
+          image: const AssetImage('assets/images/memories/goa_cover.png'),
           isLocked: true,
         ),
         VaultFeatureItem(
@@ -1589,7 +1684,6 @@ List<VaultFeatureItem> getDummyVaultItems(
   }
 }
 
-
 List<VaultAddItem> getAvailableVaultItems() {
   return [
     // Memories
@@ -1599,9 +1693,7 @@ List<VaultAddItem> getAvailableVaultItems() {
       subtitle: 'Our little Goa adventure ❤️',
       dateLabel: '12 Aug 2025',
       type: VaultFeatureType.memories,
-      image: const AssetImage(
-        'assets/images/memories/goa_cover.png',
-      ),
+      image: const AssetImage('assets/images/memories/goa_cover.png'),
     ),
 
     VaultAddItem(
@@ -1662,9 +1754,7 @@ List<VaultAddItem> getAvailableVaultItems() {
       title: 'Private photo',
       subtitle: 'Added to your gallery.',
       type: VaultFeatureType.photos,
-      image: const AssetImage(
-        'assets/images/memories/goa_2.png',
-      ),
+      image: const AssetImage('assets/images/memories/goa_2.png'),
     ),
 
     // Videos
@@ -1678,12 +1768,8 @@ List<VaultAddItem> getAvailableVaultItems() {
   ];
 }
 
-
 class VaultItemDetailArgs {
-  const VaultItemDetailArgs({
-    required this.type,
-    required this.item,
-  });
+  const VaultItemDetailArgs({required this.type, required this.item});
 
   final VaultFeatureType type;
   final VaultFeatureItem item;

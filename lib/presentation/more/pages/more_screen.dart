@@ -141,7 +141,7 @@ class MoreScreen extends StatelessWidget {
                         title: 'Gift Wishlist',
                         backgroundColor: const Color(0xFFEDE8F5),
                         onTap: () {
-                          debugPrint('Gift Wishlist');
+                          context.push(AppRoutes.giftWishes);
                         },
                       ),
                     ]),
