@@ -404,6 +404,8 @@ class _FutureMessageSuccessScreenState
   // ===========================================================================
 
   Widget _buildMessageSummary() {
+    final hasVoice = widget.data.voiceNote != null;
+
     return Padding(
       padding: const EdgeInsets.only(
         top: 16,
@@ -423,8 +425,7 @@ class _FutureMessageSuccessScreenState
           ),
         ),
         child: Column(
-          crossAxisAlignment:
-          CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'YOUR CAPSULE',
@@ -465,29 +466,27 @@ class _FutureMessageSuccessScreenState
 
             const SizedBox(height: 14),
 
-            Row(
+            Wrap(
+              spacing: 7,
+              runSpacing: 7,
               children: [
-                _MiniInfo(
+                const _MiniInfo(
                   icon: Icons.lock_outline_rounded,
                   label: 'Sealed',
                 ),
 
-                if (widget.data.photos.isNotEmpty) ...[
-                  const SizedBox(width: 7),
+                if (widget.data.photos.isNotEmpty)
                   _MiniInfo(
                     icon: Icons.photo_outlined,
                     label:
                     '${widget.data.photos.length} photos',
                   ),
-                ],
 
-                if (widget.data.voiceNote) ...[
-                  const SizedBox(width: 7),
+                if (hasVoice)
                   const _MiniInfo(
                     icon: Icons.mic_none_rounded,
                     label: 'Voice note',
                   ),
-                ],
               ],
             ),
           ],
@@ -692,36 +691,36 @@ class _FutureMessageSuccessScreenState
                     ),
                   ),
 
-                  const SizedBox(height: 7),
-
-                  GestureDetector(
-                    onTap: widget.onCreateAnother,
-                    child: Container(
-                      width: double.infinity,
-                      height: 43,
-                      decoration: BoxDecoration(
-                        color: AppColors.surface
-                            .withValues(alpha: 0.92),
-                        borderRadius:
-                        BorderRadius.circular(22),
-                        border: Border.all(
-                          color: AppColors.primary
-                              .withValues(alpha: 0.42),
-                        ),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Create Another',
-                        style:
-                        AppTextTheme.labelLarge.copyWith(
-                          fontSize: 11,
-                          color: AppColors.primary,
-                          fontWeight:
-                          FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // const SizedBox(height: 7),
+                  //
+                  // GestureDetector(
+                  //   onTap: widget.onCreateAnother,
+                  //   child: Container(
+                  //     width: double.infinity,
+                  //     height: 43,
+                  //     decoration: BoxDecoration(
+                  //       color: AppColors.surface
+                  //           .withValues(alpha: 0.92),
+                  //       borderRadius:
+                  //       BorderRadius.circular(22),
+                  //       border: Border.all(
+                  //         color: AppColors.primary
+                  //             .withValues(alpha: 0.42),
+                  //       ),
+                  //     ),
+                  //     alignment: Alignment.center,
+                  //     child: Text(
+                  //       'Create Another',
+                  //       style:
+                  //       AppTextTheme.labelLarge.copyWith(
+                  //         fontSize: 11,
+                  //         color: AppColors.primary,
+                  //         fontWeight:
+                  //         FontWeight.w600,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

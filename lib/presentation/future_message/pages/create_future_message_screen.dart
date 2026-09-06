@@ -8,6 +8,12 @@ import 'package:image_picker/image_picker.dart';
 import '../../../core/config/theme/app_colors.dart';
 import '../../../core/config/theme/app_text_theme.dart';
 
+import 'dart:async';
+import 'dart:io';
+
+import 'package:path_provider/path_provider.dart';
+import 'package:record/record.dart';
+
 /// ---------------------------------------------------------------------------
 /// CREATE FUTURE MESSAGE DATA
 /// ---------------------------------------------------------------------------
@@ -32,7 +38,7 @@ class CreateFutureMessageData {
   ///
   /// Later, when we add actual audio recording/storage, this can become:
   /// XFile? voiceNote
-  final bool voiceNote;
+  final XFile? voiceNote;
 }
 
 /// ---------------------------------------------------------------------------
@@ -75,7 +81,15 @@ class _CreateFutureMessageScreenState
     minute: 0,
   );
 
-  bool _voiceNoteAdded = false;
+  final AudioRecorder _audioRecorder = AudioRecorder();
+
+  XFile? _voiceNote;
+
+  bool _isRecording = false;
+
+  Duration _recordingDuration = Duration.zero;
+
+  Timer? _recordingTimer;
 
   @override
   void initState() {
@@ -105,9 +119,14 @@ class _CreateFutureMessageScreenState
 
   @override
   void dispose() {
+    _recordingTimer?.cancel();
+
+    _audioRecorder.dispose();
+
     _animationController.dispose();
     _titleController.dispose();
     _messageController.dispose();
+
     super.dispose();
   }
 
@@ -126,7 +145,7 @@ class _CreateFutureMessageScreenState
 
     if (message.isEmpty &&
         _photos.isEmpty &&
-        !_voiceNoteAdded) {
+        _voiceNote == null) {
       _showMessage(
         'Add a little something before sealing it.',
       );
@@ -156,7 +175,7 @@ class _CreateFutureMessageScreenState
       openDate: _openDate,
       openTime: _openTime,
       photos: List.unmodifiable(_photos),
-      voiceNote: _voiceNoteAdded,
+      voiceNote: _voiceNote,
     );
 
     widget.onSave?.call(data);
@@ -264,21 +283,163 @@ class _CreateFutureMessageScreenState
   /// VOICE NOTE
   /// -------------------------------------------------------------------------
 
-  void _toggleVoiceNote() {
-    /*
-     * This is intentionally a UI placeholder for now.
-     *
-     * When we build the actual voice recorder, replace this method
-     * with the recorder implementation.
-     */
+  // void _toggleVoiceNote() {
+  //   /*
+  //    * This is intentionally a UI placeholder for now.
+  //    *
+  //    * When we build the actual voice recorder, replace this method
+  //    * with the recorder implementation.
+  //    */
+  //   setState(() {
+  //     _voiceNoteAdded = !_voiceNoteAdded;
+  //   });
+  //
+  //   if (_voiceNoteAdded) {
+  //     _showMessage(
+  //       'Voice note added. Recording will be connected next.',
+  //     );
+  //   }
+  // }
+
+
+  Future<void> _toggleVoiceRecording() async {
+    if (_isRecording) {
+      await _stopVoiceRecording();
+    } else {
+      await _startVoiceRecording();
+    }
+  }
+
+  Future<void> _startVoiceRecording() async {
+    try {
+      final hasPermission =
+      await _audioRecorder.hasPermission();
+
+      if (!hasPermission) {
+        _showMessage(
+          'Microphone permission is required.',
+        );
+        return;
+      }
+
+      final directory =
+      await getTemporaryDirectory();
+
+      final filePath =
+          '${directory.path}/simi_voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
+
+      await _audioRecorder.start(
+        const RecordConfig(
+          encoder: AudioEncoder.aacLc,
+          bitRate: 128000,
+          sampleRate: 44100,
+        ),
+        path: filePath,
+      );
+
+      if (!mounted) return;
+
+      setState(() {
+        _isRecording = true;
+        _recordingDuration = Duration.zero;
+      });
+
+      _recordingTimer?.cancel();
+
+      _recordingTimer = Timer.periodic(
+        const Duration(seconds: 1),
+            (_) {
+          if (!mounted) return;
+
+          setState(() {
+            _recordingDuration +=
+            const Duration(seconds: 1);
+          });
+        },
+      );
+    } catch (e) {
+      debugPrint(
+        'VOICE RECORD ERROR: $e',
+      );
+
+      _showMessage(
+        'Could not start recording.',
+      );
+    }
+  }
+
+
+  Future<void> _stopVoiceRecording() async {
+    try {
+      _recordingTimer?.cancel();
+      _recordingTimer = null;
+
+      final path = await _audioRecorder.stop();
+
+      if (!mounted) return;
+
+      setState(() {
+        _isRecording = false;
+      });
+
+      if (path == null || path.isEmpty) {
+        _showMessage(
+          'No voice recording was created.',
+        );
+        return;
+      }
+
+      final file = File(path);
+
+      if (!file.existsSync()) {
+        _showMessage(
+          'Voice recording could not be saved.',
+        );
+        return;
+      }
+
+      setState(() {
+        _voiceNote = XFile(path);
+      });
+
+      _showMessage(
+        'Voice note recorded ❤️',
+      );
+    } catch (e) {
+      debugPrint(
+        'VOICE STOP ERROR: $e',
+      );
+
+      if (!mounted) return;
+
+      setState(() {
+        _isRecording = false;
+      });
+
+      _showMessage(
+        'Could not save the voice note.',
+      );
+    }
+  }
+
+  Future<void> _removeVoiceNote() async {
+    final path = _voiceNote?.path;
+
     setState(() {
-      _voiceNoteAdded = !_voiceNoteAdded;
+      _voiceNote = null;
+      _recordingDuration = Duration.zero;
     });
 
-    if (_voiceNoteAdded) {
-      _showMessage(
-        'Voice note added. Recording will be connected next.',
-      );
+    if (path != null) {
+      try {
+        final file = File(path);
+
+        if (await file.exists()) {
+          await file.delete();
+        }
+      } catch (_) {
+        // Temporary file cleanup failure can safely be ignored.
+      }
     }
   }
 
@@ -326,7 +487,7 @@ class _CreateFutureMessageScreenState
               ),
               children: [
                 _buildTopBar(context),
-                _buildProgress(),
+                // _buildProgress(),
                 _buildIntro(),
                 _buildTitleSection(),
                 _buildLetterSection(),
@@ -674,17 +835,32 @@ class _CreateFutureMessageScreenState
 
               Expanded(
                 child: _AttachmentButton(
-                  icon: _voiceNoteAdded
+                  icon: _isRecording
+                      ? Icons.stop_rounded
+                      : _voiceNote != null
                       ? Icons.graphic_eq_rounded
                       : Icons.mic_none_rounded,
-                  title: _voiceNoteAdded
+
+                  title: _isRecording
+                      ? 'Recording...'
+                      : _voiceNote != null
                       ? 'Voice Added'
                       : 'Record Voice',
-                  subtitle: _voiceNoteAdded
-                      ? '0:45 memory'
+
+                  subtitle: _isRecording
+                      ? _formatRecordingDuration(
+                    _recordingDuration,
+                  )
+                      : _voiceNote != null
+                      ? _formatRecordingDuration(
+                    _recordingDuration,
+                  )
                       : 'Leave your voice',
-                  onTap: _toggleVoiceNote,
-                  selected: _voiceNoteAdded,
+
+                  onTap: _toggleVoiceRecording,
+
+                  selected:
+                  _isRecording || _voiceNote != null,
                 ),
               ),
             ],
@@ -695,7 +871,7 @@ class _CreateFutureMessageScreenState
             _buildPhotoStrip(),
           ],
 
-          if (_voiceNoteAdded) ...[
+          if (_voiceNote != null) ...[
             const SizedBox(height: 12),
             _buildVoicePreview(),
           ],
@@ -786,9 +962,9 @@ class _CreateFutureMessageScreenState
               shape: BoxShape.circle,
             ),
             child: const Icon(
-              Icons.play_arrow_rounded,
+              Icons.graphic_eq_rounded,
               color: AppColors.primary,
-              size: 21,
+              size: 20,
             ),
           ),
 
@@ -808,7 +984,9 @@ class _CreateFutureMessageScreenState
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  '00:45',
+                  _formatRecordingDuration(
+                    _recordingDuration,
+                  ),
                   style:
                   AppTextTheme.labelSmall.copyWith(
                     color: AppColors.textSecondary,
@@ -819,7 +997,7 @@ class _CreateFutureMessageScreenState
           ),
 
           GestureDetector(
-            onTap: _toggleVoiceNote,
+            onTap: _removeVoiceNote,
             child: const Icon(
               Icons.delete_outline_rounded,
               size: 19,
@@ -829,6 +1007,20 @@ class _CreateFutureMessageScreenState
         ],
       ),
     );
+  }
+
+  String _formatRecordingDuration(
+      Duration duration,
+      ) {
+    final minutes =
+    duration.inMinutes.toString().padLeft(2, '0');
+
+    final seconds =
+    (duration.inSeconds % 60)
+        .toString()
+        .padLeft(2, '0');
+
+    return '$minutes:$seconds';
   }
 
   /// -------------------------------------------------------------------------
@@ -947,7 +1139,7 @@ class _CreateFutureMessageScreenState
         openDate: _openDate,
         openTime: _openTime,
         photoCount: _photos.length,
-        voiceAdded: _voiceNoteAdded,
+        voiceAdded: _voiceNote != null,
       ),
     );
   }

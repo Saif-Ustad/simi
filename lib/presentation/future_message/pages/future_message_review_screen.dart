@@ -71,7 +71,7 @@ class _FutureMessageReviewScreenState
               ),
               children: [
                 _buildTopBar(context),
-                _buildProgress(),
+                // _buildProgress(),
                 _buildIntro(),
                 _buildCapsuleHero(),
                 _buildMessagePreview(),
@@ -649,7 +649,8 @@ class _FutureMessageReviewScreenState
 
   Widget _buildAttachments() {
     final photos = widget.data.photos;
-    final hasVoice = widget.data.voiceNote;
+    final voiceNote = widget.data.voiceNote;
+    final hasVoice = voiceNote != null;
 
     if (photos.isEmpty && !hasVoice) {
       return const SizedBox.shrink();
@@ -667,8 +668,7 @@ class _FutureMessageReviewScreenState
         delay: 0.27,
         child: _ReviewCard(
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const _SectionLabel(
                 title: 'KEPT WITH IT',
@@ -679,8 +679,7 @@ class _FutureMessageReviewScreenState
               if (photos.isNotEmpty)
                 _buildPhotos(photos),
 
-              if (photos.isNotEmpty &&
-                  hasVoice)
+              if (photos.isNotEmpty && hasVoice)
                 const SizedBox(height: 11),
 
               if (hasVoice)
@@ -719,23 +718,36 @@ class _FutureMessageReviewScreenState
   }
 
   Widget _buildVoiceRow() {
+    final voiceNote = widget.data.voiceNote;
+
+    if (voiceNote == null) {
+      return const SizedBox.shrink();
+    }
+
     return Container(
-      padding: const EdgeInsets.all(11),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 11,
+      ),
       decoration: BoxDecoration(
-        color: const Color(0xFFF7F1F0),
+        color: const Color(0xFFF8F1F1),
         borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: AppColors.outlineVariant
+              .withValues(alpha: 0.45),
+        ),
       ),
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: 38,
+            height: 38,
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: Color(0xFFFCE4EC),
               shape: BoxShape.circle,
             ),
             child: const Icon(
-              Icons.play_arrow_rounded,
+              Icons.graphic_eq_rounded,
               size: 19,
               color: AppColors.primary,
             ),
@@ -746,25 +758,24 @@ class _FutureMessageReviewScreenState
           Expanded(
             child: Column(
               crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Voice memory',
-                  style:
-                      AppTextTheme.labelLarge.copyWith(
-                    fontSize: 11,
-                    color:
-                        AppColors.textPrimary,
+                  'Voice note',
+                  style: AppTextTheme.labelLarge.copyWith(
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  '00:45',
-                  style:
-                      AppTextTheme.labelSmall.copyWith(
+                  'A little piece of your voice',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextTheme.labelSmall.copyWith(
                     fontSize: 8.5,
-                    color:
-                        AppColors.textSecondary,
+                    color: AppColors.textSecondary,
                   ),
                 ),
               ],
@@ -772,7 +783,7 @@ class _FutureMessageReviewScreenState
           ),
 
           const Icon(
-            Icons.graphic_eq_rounded,
+            Icons.check_circle_rounded,
             size: 18,
             color: AppColors.primary,
           ),
@@ -1059,36 +1070,36 @@ class _FutureMessageReviewScreenState
                     ),
                   ),
 
-                  const SizedBox(height: 7),
-
-                  GestureDetector(
-                    onTap: widget.onEdit,
-                    child: Container(
-                      width: double.infinity,
-                      height: 43,
-                      decoration: BoxDecoration(
-                        color: AppColors.surface
-                            .withValues(alpha: 0.90),
-                        borderRadius:
-                            BorderRadius.circular(22),
-                        border: Border.all(
-                          color: AppColors.primary
-                              .withValues(alpha: 0.45),
-                        ),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Edit Contents',
-                        style:
-                            AppTextTheme.labelLarge.copyWith(
-                          fontSize: 11,
-                          color: AppColors.primary,
-                          fontWeight:
-                              FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // const SizedBox(height: 7),
+                  //
+                  // GestureDetector(
+                  //   onTap: widget.onEdit,
+                  //   child: Container(
+                  //     width: double.infinity,
+                  //     height: 43,
+                  //     decoration: BoxDecoration(
+                  //       color: AppColors.surface
+                  //           .withValues(alpha: 0.90),
+                  //       borderRadius:
+                  //           BorderRadius.circular(22),
+                  //       border: Border.all(
+                  //         color: AppColors.primary
+                  //             .withValues(alpha: 0.45),
+                  //       ),
+                  //     ),
+                  //     alignment: Alignment.center,
+                  //     child: Text(
+                  //       'Edit Contents',
+                  //       style:
+                  //           AppTextTheme.labelLarge.copyWith(
+                  //         fontSize: 11,
+                  //         color: AppColors.primary,
+                  //         fontWeight:
+                  //             FontWeight.w600,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

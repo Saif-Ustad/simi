@@ -1,10 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/config/theme/app_colors.dart';
 import '../../../../core/config/theme/app_text_theme.dart';
+import '../../../core/config/routes/router.dart';
 
 /// ---------------------------------------------------------------------------
 /// MODEL
@@ -235,9 +237,10 @@ class _FutureMessagesHomeScreenState
           ),
 
           _CircleButton(
-            icon: Icons.more_horiz_rounded,
+            icon: Icons.settings_outlined,
             onTap: () {
-              _showMoreSheet(context);
+              // _showMoreSheet(context);
+              context.push(AppRoutes.futureMessageSettings);
             },
           ),
         ],
@@ -1096,7 +1099,9 @@ class _FutureMessagesHomeScreenState
                 title: 'Future Message Settings',
                 subtitle: 'Notifications and privacy',
                 onTap: () {
-                  Navigator.pop(sheetContext);
+                  context.push(
+                    AppRoutes.futureMessageSettings,
+                  );
                   // Connect settings route later.
                 },
               ),

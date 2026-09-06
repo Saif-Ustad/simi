@@ -9,7 +9,9 @@ import '../../../presentation/chat/pages/love_chat_conversation_screen.dart';
 import '../../../presentation/chat/pages/love_chat_screen.dart';
 import '../../../presentation/future_message/pages/create_future_message_screen.dart';
 import '../../../presentation/future_message/pages/future_message_detail_screen.dart';
+import '../../../presentation/future_message/pages/future_message_open_screen.dart';
 import '../../../presentation/future_message/pages/future_message_review_screen.dart';
+import '../../../presentation/future_message/pages/future_message_settings_screen.dart';
 import '../../../presentation/future_message/pages/future_message_success_screen.dart';
 import '../../../presentation/future_message/pages/future_messages_home_screen.dart';
 import '../../../presentation/gift_wishes/pages/create_gift_wish_screen.dart';
@@ -147,6 +149,8 @@ class AppRoutes {
   static const String futureMessageSuccess = '/future-messages/success';
   static const String futureMessageEdit = '/future-messages/edit';
   static const String futureMessageSettings = '/future-messages/settings';
+  static const String futureMessageOpen = '/future-messages/open';
+
 }
 
 final GoRouter router = GoRouter(
@@ -2283,12 +2287,10 @@ final GoRouter router = GoRouter(
           },
 
           onOpen: () {
-            debugPrint(
-              'Opening future message: ${message.title}',
+            context.push(
+              AppRoutes.futureMessageOpen,
+              extra: message,
             );
-
-            // Later this will actually change
-            // locked/ready → opened.
           },
 
           onFavoriteChanged: (value) {
@@ -2309,6 +2311,90 @@ final GoRouter router = GoRouter(
             );
 
             context.pop();
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.futureMessageOpen,
+      builder: (context, state) {
+        final message =
+        state.extra as FutureMessageItem;
+
+        return FutureMessageOpenScreen(
+          message: message,
+
+          onBack: () {
+            context.pop();
+          },
+
+          onOpened: () {
+            // Later connect this to repository/database.
+            debugPrint(
+              'Message opened: ${message.title}',
+            );
+
+            // context.pushReplacement(
+            //   AppRoutes.futureMessageDetail,
+            //   extra: message,
+            // );
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.futureMessageSettings,
+      builder: (context, state) {
+        return FutureMessageSettingsScreen(
+          notificationsEnabled: true,
+          defaultReminder:
+          FutureMessageDefaultReminder.oneWeek,
+          notificationPreview: true,
+          autoMarkAsOpened: true,
+          saveAttachments: true,
+
+          onBack: () {
+            context.pop();
+          },
+
+          onNotificationsChanged: (value) {
+            debugPrint(
+              'Future message notifications: $value',
+            );
+          },
+
+          onDefaultReminderChanged: (value) {
+            debugPrint(
+              'Default reminder: $value',
+            );
+          },
+
+          onNotificationPreviewChanged: (value) {
+            debugPrint(
+              'Notification preview: $value',
+            );
+          },
+
+          onAutoMarkAsOpenedChanged: (value) {
+            debugPrint(
+              'Auto mark opened: $value',
+            );
+          },
+
+          onSaveAttachmentsChanged: (value) {
+            debugPrint(
+              'Save attachments: $value',
+            );
+          },
+
+          onClearAttachments: () {
+            debugPrint(
+              'Clear future message attachments',
+            );
           },
         );
       },
