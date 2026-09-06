@@ -138,15 +138,12 @@ class AppRoutes {
   static const String termsOfService = '/settings/terms';
   static const String sendFeedback = '/settings/feedback';
 
-
   static const String privateVault = '/private-vault';
   static const String privateVaultFeature = '/private-vault/feature';
   static const String addToPrivateVault = '/private-vault/add';
   static const String privateVaultItemDetail = '/private-vault/item-detail';
   static const String privateVaultSettings = '/private-vault/settings';
   static const String helpSupport = '/settings/help-support';
-
-
 
   static const String giftWishes = '/gift-wishes';
   static const String createGiftWish = '/gift-wishes/create';
@@ -181,17 +178,14 @@ class AppRoutes {
   static const String futureMessageSettings = '/future-messages/settings';
   static const String futureMessageOpen = '/future-messages/open';
 
-
   static const String moodJournal = '/mood-journal';
   static const String moodEntryDetail = '/mood-journal/detail';
   static const String addMoodEntry = '/mood-journal/add';
-
 
   static const String simiSurprises = '/simi-surprises';
   static const String simiSurpriseDetail = '/simi-surprises/detail';
   static const String simiSurprisesSettings = '/simi-surprises/settings';
   static const String simiSurpriseMe = '/simi-surprises/surprise-me';
-
 }
 
 final GoRouter router = GoRouter(
@@ -363,7 +357,12 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: AppRoutes.home,
           builder: (context, state) {
-            return const HomeScreen();
+            return HomeScreen(
+              onAddMemory: () => {context.push(AppRoutes.memories)},
+              onPeriod: () => {context.push(AppRoutes.period)},
+              onSpecialDate: () => {context.push(AppRoutes.specialDates)},
+              onFutureMessage: () => {context.push(AppRoutes.futureMessages)},
+            );
           },
         ),
 
@@ -2132,7 +2131,6 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.futureMessages,
       builder: (context, state) {
@@ -2141,13 +2139,9 @@ final GoRouter router = GoRouter(
             id: '1',
             title: 'Open when you miss me',
             description:
-            'A small reminder of our trip and all the little moments I want you to remember.',
-            createdAt: DateTime.now().subtract(
-              const Duration(days: 12),
-            ),
-            openAt: DateTime.now().add(
-              const Duration(days: 14),
-            ),
+                'A small reminder of our trip and all the little moments I want you to remember.',
+            createdAt: DateTime.now().subtract(const Duration(days: 12)),
+            openAt: DateTime.now().add(const Duration(days: 14)),
             status: FutureMessageStatus.locked,
             photoCount: 4,
           ),
@@ -2156,13 +2150,9 @@ final GoRouter router = GoRouter(
             id: '2',
             title: 'For our anniversary',
             description:
-            'I wrote this down today because I know I will want you to read it someday.',
-            createdAt: DateTime.now().subtract(
-              const Duration(days: 8),
-            ),
-            openAt: DateTime.now().add(
-              const Duration(days: 60),
-            ),
+                'I wrote this down today because I know I will want you to read it someday.',
+            createdAt: DateTime.now().subtract(const Duration(days: 8)),
+            openAt: DateTime.now().add(const Duration(days: 60)),
             status: FutureMessageStatus.locked,
             isFavorite: true,
           ),
@@ -2171,37 +2161,27 @@ final GoRouter router = GoRouter(
             id: '3',
             title: 'A Note from Last Year',
             description:
-            'You left this little piece of us here for the future.',
-            createdAt: DateTime.now().subtract(
-              const Duration(days: 300),
-            ),
-            openAt: DateTime.now().subtract(
-              const Duration(days: 1),
-            ),
+                'You left this little piece of us here for the future.',
+            createdAt: DateTime.now().subtract(const Duration(days: 300)),
+            openAt: DateTime.now().subtract(const Duration(days: 1)),
             status: FutureMessageStatus.ready,
             photoCount: 4,
             voiceDuration: const Duration(seconds: 45),
 
-            voicePath:
-            'assets/audio/note_from_last_year.mp3',
+            voicePath: 'assets/audio/note_from_last_year.mp3',
           ),
 
           FutureMessageItem(
             id: '4',
             title: 'Our mountain weekend',
             description:
-            'The words we wanted to keep from one of our favorite little escapes.',
-            createdAt: DateTime.now().subtract(
-              const Duration(days: 400),
-            ),
-            openAt: DateTime.now().subtract(
-              const Duration(days: 30),
-            ),
+                'The words we wanted to keep from one of our favorite little escapes.',
+            createdAt: DateTime.now().subtract(const Duration(days: 400)),
+            openAt: DateTime.now().subtract(const Duration(days: 30)),
             status: FutureMessageStatus.opened,
             photoCount: 3,
             voiceDuration: const Duration(seconds: 32),
-            voicePath:
-            'assets/audio/note_from_last_year.mp3',
+            voicePath: 'assets/audio/note_from_last_year.mp3',
           ),
         ];
 
@@ -2209,39 +2189,27 @@ final GoRouter router = GoRouter(
           messages: messages,
 
           onMessageTap: (message) {
-            context.push(
-              AppRoutes.futureMessageDetail,
-              extra: message,
-            );
+            context.push(AppRoutes.futureMessageDetail, extra: message);
           },
 
           onCreateMessage: () {
-            context.push(
-              AppRoutes.createFutureMessage,
-            );
+            context.push(AppRoutes.createFutureMessage);
           },
 
           onFavoriteChanged: (message) {
-            debugPrint(
-              'Favorite changed: ${message.title}',
-            );
+            debugPrint('Favorite changed: ${message.title}');
           },
 
           onMore: (message) {
-            debugPrint(
-              'More: ${message.title}',
-            );
+            debugPrint('More: ${message.title}');
           },
 
           onSearch: (query) {
-            debugPrint(
-              'Future message search: $query',
-            );
+            debugPrint('Future message search: $query');
           },
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.createFutureMessage,
@@ -2252,21 +2220,16 @@ final GoRouter router = GoRouter(
           },
 
           onSave: (data) {
-            context.push(
-              AppRoutes.futureMessageReview,
-              extra: data,
-            );
+            context.push(AppRoutes.futureMessageReview, extra: data);
           },
         );
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.futureMessageReview,
       builder: (context, state) {
-        final data =
-        state.extra as CreateFutureMessageData;
+        final data = state.extra as CreateFutureMessageData;
 
         return FutureMessageReviewScreen(
           data: data,
@@ -2280,10 +2243,7 @@ final GoRouter router = GoRouter(
           },
 
           onSeal: () {
-            context.push(
-              AppRoutes.futureMessageSuccess,
-              extra: data,
-            );
+            context.push(AppRoutes.futureMessageSuccess, extra: data);
           },
         );
       },
@@ -2292,33 +2252,26 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.futureMessageSuccess,
       builder: (context, state) {
-        final data =
-        state.extra as CreateFutureMessageData;
+        final data = state.extra as CreateFutureMessageData;
 
         return FutureMessageSuccessScreen(
           data: data,
 
           onViewMessages: () {
-            context.go(
-              AppRoutes.futureMessages,
-            );
+            context.go(AppRoutes.futureMessages);
           },
 
           onCreateAnother: () {
-            context.go(
-              AppRoutes.createFutureMessage,
-            );
+            context.go(AppRoutes.createFutureMessage);
           },
         );
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.futureMessageDetail,
       builder: (context, state) {
-        final message =
-        state.extra as FutureMessageItem;
+        final message = state.extra as FutureMessageItem;
 
         return FutureMessageDetailScreen(
           message: message,
@@ -2328,28 +2281,19 @@ final GoRouter router = GoRouter(
           },
 
           onOpen: () {
-            context.push(
-              AppRoutes.futureMessageOpen,
-              extra: message,
-            );
+            context.push(AppRoutes.futureMessageOpen, extra: message);
           },
 
           onFavoriteChanged: (value) {
-            debugPrint(
-              'Favorite ${message.title}: $value',
-            );
+            debugPrint('Favorite ${message.title}: $value');
           },
 
           onMore: () {
-            debugPrint(
-              'More: ${message.title}',
-            );
+            debugPrint('More: ${message.title}');
           },
 
           onDelete: () {
-            debugPrint(
-              'Deleted: ${message.title}',
-            );
+            debugPrint('Deleted: ${message.title}');
 
             context.pop();
           },
@@ -2357,12 +2301,10 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.futureMessageOpen,
       builder: (context, state) {
-        final message =
-        state.extra as FutureMessageItem;
+        final message = state.extra as FutureMessageItem;
 
         return FutureMessageOpenScreen(
           message: message,
@@ -2373,9 +2315,7 @@ final GoRouter router = GoRouter(
 
           onOpened: () {
             // Later connect this to repository/database.
-            debugPrint(
-              'Message opened: ${message.title}',
-            );
+            debugPrint('Message opened: ${message.title}');
 
             // context.pushReplacement(
             //   AppRoutes.futureMessageDetail,
@@ -2386,14 +2326,12 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.futureMessageSettings,
       builder: (context, state) {
         return FutureMessageSettingsScreen(
           notificationsEnabled: true,
-          defaultReminder:
-          FutureMessageDefaultReminder.oneWeek,
+          defaultReminder: FutureMessageDefaultReminder.oneWeek,
           notificationPreview: true,
           autoMarkAsOpened: true,
           saveAttachments: true,
@@ -2403,44 +2341,31 @@ final GoRouter router = GoRouter(
           },
 
           onNotificationsChanged: (value) {
-            debugPrint(
-              'Future message notifications: $value',
-            );
+            debugPrint('Future message notifications: $value');
           },
 
           onDefaultReminderChanged: (value) {
-            debugPrint(
-              'Default reminder: $value',
-            );
+            debugPrint('Default reminder: $value');
           },
 
           onNotificationPreviewChanged: (value) {
-            debugPrint(
-              'Notification preview: $value',
-            );
+            debugPrint('Notification preview: $value');
           },
 
           onAutoMarkAsOpenedChanged: (value) {
-            debugPrint(
-              'Auto mark opened: $value',
-            );
+            debugPrint('Auto mark opened: $value');
           },
 
           onSaveAttachmentsChanged: (value) {
-            debugPrint(
-              'Save attachments: $value',
-            );
+            debugPrint('Save attachments: $value');
           },
 
           onClearAttachments: () {
-            debugPrint(
-              'Clear future message attachments',
-            );
+            debugPrint('Clear future message attachments');
           },
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.moodJournal,
@@ -2450,40 +2375,36 @@ final GoRouter router = GoRouter(
             date: DateTime.now(),
             mood: MoodType.loved,
             note: 'Feeling really close to you today ❤️',
-            isShared: true, intensity: 0,
+            isShared: true,
+            intensity: 0,
           ),
           MoodEntry(
-            date: DateTime.now().subtract(
-              const Duration(days: 1),
-            ),
+            date: DateTime.now().subtract(const Duration(days: 1)),
             mood: MoodType.calm,
-            note: 'A peaceful day.', intensity: 0,
+            note: 'A peaceful day.',
+            intensity: 0,
           ),
           MoodEntry(
-            date: DateTime.now().subtract(
-              const Duration(days: 2),
-            ),
+            date: DateTime.now().subtract(const Duration(days: 2)),
             mood: MoodType.happy,
-            note: 'Had such a good day.', intensity: 0,
+            note: 'Had such a good day.',
+            intensity: 0,
           ),
           MoodEntry(
-            date: DateTime.now().subtract(
-              const Duration(days: 4),
-            ),
+            date: DateTime.now().subtract(const Duration(days: 4)),
             mood: MoodType.loved,
-            note: 'Missing you a little extra.', intensity: 0,
+            note: 'Missing you a little extra.',
+            intensity: 0,
           ),
           MoodEntry(
-            date: DateTime.now().subtract(
-              const Duration(days: 6),
-            ),
-            mood: MoodType.tired, intensity: 0,
+            date: DateTime.now().subtract(const Duration(days: 6)),
+            mood: MoodType.tired,
+            intensity: 0,
           ),
           MoodEntry(
-            date: DateTime.now().subtract(
-              const Duration(days: 8),
-            ),
-            mood: MoodType.happy, intensity: 0,
+            date: DateTime.now().subtract(const Duration(days: 8)),
+            mood: MoodType.happy,
+            intensity: 0,
           ),
         ];
 
@@ -2504,22 +2425,16 @@ final GoRouter router = GoRouter(
 
             context.push(
               AppRoutes.moodEntryDetail,
-              extra: {
-                'date': date,
-                'entry': selectedEntry,
-              },
+              extra: {'date': date, 'entry': selectedEntry},
             );
           },
 
           onAddMood: () {
-            context.push(
-              AppRoutes.addMoodEntry,
-            );
+            context.push(AppRoutes.addMoodEntry);
           },
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.addMoodEntry,
@@ -2540,18 +2455,14 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.moodEntryDetail,
       builder: (context, state) {
-        final data =
-        state.extra as Map<String, dynamic>;
+        final data = state.extra as Map<String, dynamic>;
 
-        final date =
-        data['date'] as DateTime;
+        final date = data['date'] as DateTime;
 
-        final entry =
-        data['entry'] as MoodEntry?;
+        final entry = data['entry'] as MoodEntry?;
 
         return MoodEntryDetailScreen(
           date: date,
@@ -2564,36 +2475,22 @@ final GoRouter router = GoRouter(
           onEdit: () {
             context.push(
               AppRoutes.addMoodEntry,
-              extra: {
-                'date': date,
-                'entry': entry,
-              },
+              extra: {'date': date, 'entry': entry},
             );
           },
 
           onDelete: () {
-            debugPrint(
-              'Delete mood entry: $date',
-            );
+            debugPrint('Delete mood entry: $date');
 
             context.pop();
           },
 
           onAddMood: () {
-            context.push(
-              AppRoutes.addMoodEntry,
-              extra: {
-                'date': date,
-              },
-            );
+            context.push(AppRoutes.addMoodEntry, extra: {'date': date});
           },
         );
       },
     ),
-
-
-
-
 
     GoRoute(
       path: AppRoutes.simiSurprises,
@@ -2604,7 +2501,7 @@ final GoRouter router = GoRouter(
             type: SimiSurpriseType.memory,
             title: 'One year ago today',
             message:
-            'You were in Goa together. '
+                'You were in Goa together. '
                 'You saved 6 memories on this day.',
             timeLabel: 'Today',
             actionLabel: 'Relive this memory',
@@ -2616,7 +2513,7 @@ final GoRouter router = GoRouter(
             type: SimiSurpriseType.chat,
             title: 'A little coincidence',
             message:
-            'You mentioned Japan 4 times this month. '
+                'You mentioned Japan 4 times this month. '
                 'Maybe someone really wants to go. ✈️',
             timeLabel: '18 min ago',
             actionLabel: 'See your conversations',
@@ -2627,7 +2524,7 @@ final GoRouter router = GoRouter(
             type: SimiSurpriseType.mood,
             title: 'Something SIMI noticed',
             message:
-            'You felt loved 3 times this week. '
+                'You felt loved 3 times this week. '
                 'That feels like a nice little pattern.',
             timeLabel: 'Today',
             actionLabel: 'See your moods',
@@ -2638,7 +2535,7 @@ final GoRouter router = GoRouter(
             type: SimiSurpriseType.specialDate,
             title: 'It\'s getting close',
             message:
-            'Your first date is in 8 days. '
+                'Your first date is in 8 days. '
                 'Maybe it deserves a little something this year.',
             timeLabel: '8 days away',
             actionLabel: 'See special date',
@@ -2649,7 +2546,7 @@ final GoRouter router = GoRouter(
             type: SimiSurpriseType.futureMessage,
             title: 'Someone from the past',
             message:
-            'A message you wrote 30 days ago '
+                'A message you wrote 30 days ago '
                 'is ready to be opened.',
             timeLabel: 'Ready now',
             actionLabel: 'Open your message',
@@ -2661,7 +2558,7 @@ final GoRouter router = GoRouter(
             type: SimiSurpriseType.period,
             title: 'Your rhythm',
             message:
-            'Your next period may be approaching '
+                'Your next period may be approaching '
                 'in 4 days.',
             timeLabel: '4 days away',
             actionLabel: 'See your period',
@@ -2672,7 +2569,7 @@ final GoRouter router = GoRouter(
             type: SimiSurpriseType.giftWish,
             title: 'You might have forgotten this',
             message:
-            'Those headphones have been sitting '
+                'Those headphones have been sitting '
                 'in your wishes for 3 months.',
             timeLabel: '3 months ago',
             actionLabel: 'See the wish',
@@ -2683,7 +2580,7 @@ final GoRouter router = GoRouter(
             type: SimiSurpriseType.milestone,
             title: 'You just reached 100 memories',
             message:
-            '100 little pieces of your story, '
+                '100 little pieces of your story, '
                 'all kept together.',
             timeLabel: 'Just now',
             actionLabel: 'Look through them',
@@ -2696,17 +2593,11 @@ final GoRouter router = GoRouter(
           totalMoments: 128,
 
           onSurpriseTap: (item) {
-            context.push(
-              AppRoutes.simiSurpriseDetail,
-              extra: item,
-            );
+            context.push(AppRoutes.simiSurpriseDetail, extra: item);
           },
 
           onSurpriseUs: () {
-            context.push(
-              AppRoutes.simiSurpriseMe,
-              extra: surprises,
-            );
+            context.push(AppRoutes.simiSurpriseMe, extra: surprises);
           },
 
           onSettings: () {
@@ -2714,20 +2605,16 @@ final GoRouter router = GoRouter(
           },
 
           onSearch: (query) {
-            debugPrint(
-              'Search SIMI surprises: $query',
-            );
+            debugPrint('Search SIMI surprises: $query');
           },
         );
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.simiSurpriseDetail,
       builder: (context, state) {
-        final surprise =
-        state.extra as SimiSurpriseItem;
+        final surprise = state.extra as SimiSurpriseItem;
 
         return SimiSurpriseDetailScreen(
           surprise: surprise,
@@ -2735,9 +2622,7 @@ final GoRouter router = GoRouter(
           onBack: () => context.pop(),
 
           onOpenOriginal: () {
-            debugPrint(
-              'Open original: ${surprise.type}',
-            );
+            debugPrint('Open original: ${surprise.type}');
 
             // Later we connect each type:
             //
@@ -2751,22 +2636,16 @@ final GoRouter router = GoRouter(
           },
 
           onFavorite: () {
-            debugPrint(
-              'Favorite surprise: ${surprise.id}',
-            );
+            debugPrint('Favorite surprise: ${surprise.id}');
           },
 
           onDismiss: () {
-            debugPrint(
-              'Dismiss surprise: ${surprise.id}',
-            );
+            debugPrint('Dismiss surprise: ${surprise.id}');
             context.pop();
           },
         );
       },
     ),
-
-
 
     GoRoute(
       path: AppRoutes.simiSurprisesSettings,
@@ -2825,12 +2704,10 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.simiSurpriseMe,
       builder: (context, state) {
-        final surprises =
-        state.extra as List<SimiSurpriseItem>;
+        final surprises = state.extra as List<SimiSurpriseItem>;
 
         return SimiSurpriseMeScreen(
           surprises: surprises,
@@ -2838,15 +2715,11 @@ final GoRouter router = GoRouter(
           onBack: () => context.pop(),
 
           onOpenSurprise: (surprise) {
-            context.push(
-              AppRoutes.simiSurpriseDetail,
-              extra: surprise,
-            );
+            context.push(AppRoutes.simiSurpriseDetail, extra: surprise);
           },
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.settings,
@@ -2866,15 +2739,11 @@ final GoRouter router = GoRouter(
           },
 
           onNotifications: () {
-            context.push(
-              AppRoutes.notifications,
-            );
+            context.push(AppRoutes.notifications);
           },
 
           onPrivacySecurity: () {
-            context.push(
-              AppRoutes.privacySecurity,
-            );
+            context.push(AppRoutes.privacySecurity);
           },
 
           onAppearance: () {
@@ -2882,9 +2751,7 @@ final GoRouter router = GoRouter(
           },
 
           onRelationship: () {
-            context.push(
-              AppRoutes.relationship,
-            );
+            context.push(AppRoutes.relationship);
           },
 
           onDataStorage: () {
@@ -2910,7 +2777,6 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.notifications,
       builder: (context, state) {
@@ -2932,69 +2798,47 @@ final GoRouter router = GoRouter(
           onBack: () => context.pop(),
 
           onNotificationsChanged: (value) {
-            debugPrint(
-              'Notifications: $value',
-            );
+            debugPrint('Notifications: $value');
           },
 
           onLoveMessagesChanged: (value) {
-            debugPrint(
-              'Love messages: $value',
-            );
+            debugPrint('Love messages: $value');
           },
 
           onSpecialDatesChanged: (value) {
-            debugPrint(
-              'Special dates: $value',
-            );
+            debugPrint('Special dates: $value');
           },
 
           onMemoriesChanged: (value) {
-            debugPrint(
-              'Memories notifications: $value',
-            );
+            debugPrint('Memories notifications: $value');
           },
 
           onFutureMessagesChanged: (value) {
-            debugPrint(
-              'Future message notifications: $value',
-            );
+            debugPrint('Future message notifications: $value');
           },
 
           onMoodUpdatesChanged: (value) {
-            debugPrint(
-              'Mood notifications: $value',
-            );
+            debugPrint('Mood notifications: $value');
           },
 
           onGiftWishesChanged: (value) {
-            debugPrint(
-              'Gift wish notifications: $value',
-            );
+            debugPrint('Gift wish notifications: $value');
           },
 
           onSimiSurprisesChanged: (value) {
-            debugPrint(
-              'SIMI Surprises: $value',
-            );
+            debugPrint('SIMI Surprises: $value');
           },
 
           onPreviewChanged: (value) {
-            debugPrint(
-              'Notification preview: $value',
-            );
+            debugPrint('Notification preview: $value');
           },
 
           onSoundChanged: (value) {
-            debugPrint(
-              'Notification sound: $value',
-            );
+            debugPrint('Notification sound: $value');
           },
 
           onVibrationChanged: (value) {
-            debugPrint(
-              'Notification vibration: $value',
-            );
+            debugPrint('Notification vibration: $value');
           },
         );
       },
@@ -3016,51 +2860,35 @@ final GoRouter router = GoRouter(
           onBack: () => context.pop(),
 
           onAppLockChanged: (value) {
-            debugPrint(
-              'App lock: $value',
-            );
+            debugPrint('App lock: $value');
           },
 
           onBiometricChanged: (value) {
-            debugPrint(
-              'Biometric: $value',
-            );
+            debugPrint('Biometric: $value');
           },
 
           onNotificationPreviewChanged: (value) {
-            debugPrint(
-              'Hide notification previews: $value',
-            );
+            debugPrint('Hide notification previews: $value');
           },
 
           onAppSwitcherPrivacyChanged: (value) {
-            debugPrint(
-              'App switcher privacy: $value',
-            );
+            debugPrint('App switcher privacy: $value');
           },
 
           onScreenshotProtectionChanged: (value) {
-            debugPrint(
-              'Screenshot protection: $value',
-            );
+            debugPrint('Screenshot protection: $value');
           },
 
           onPrivateContentChanged: (value) {
-            debugPrint(
-              'Private content: $value',
-            );
+            debugPrint('Private content: $value');
           },
 
           onAnalyticsChanged: (value) {
-            debugPrint(
-              'Analytics: $value',
-            );
+            debugPrint('Analytics: $value');
           },
 
           onCrashReportsChanged: (value) {
-            debugPrint(
-              'Crash reports: $value',
-            );
+            debugPrint('Crash reports: $value');
           },
 
           onChangePin: () {
@@ -3068,9 +2896,7 @@ final GoRouter router = GoRouter(
           },
 
           onManagePrivateContent: () {
-            debugPrint(
-              'Manage private content',
-            );
+            debugPrint('Manage private content');
           },
 
           onExportData: () {
@@ -3083,7 +2909,6 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.profile,
@@ -3105,9 +2930,7 @@ final GoRouter router = GoRouter(
           onBack: () => context.pop(),
 
           onEditProfile: () {
-            context.push(
-              AppRoutes.editProfile,
-            );
+            context.push(AppRoutes.editProfile);
           },
 
           onChangePhoto: () {
@@ -3121,7 +2944,6 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.editProfile,
       builder: (context, state) {
@@ -3130,42 +2952,22 @@ final GoRouter router = GoRouter(
           partnerName: 'Love',
           bio: 'A little corner of the world, just for us.',
           relationshipLabel: 'Together',
-          relationshipStartDate:
-          DateTime(2024, 2, 14),
+          relationshipStartDate: DateTime(2024, 2, 14),
           city: 'Mumbai',
-          favoriteMemory:
-          'Our first trip together',
+          favoriteMemory: 'Our first trip together',
 
           onBack: () => context.pop(),
 
           onSave: (data) {
-            debugPrint(
-              'Profile saved: ${data.name}',
-            );
-            debugPrint(
-              'Partner: ${data.partnerName}',
-            );
-            debugPrint(
-              'Bio: ${data.bio}',
-            );
-            debugPrint(
-              'Relationship: ${data.relationshipLabel}',
-            );
-            debugPrint(
-              'Date: ${data.relationshipStartDate}',
-            );
-            debugPrint(
-              'City: ${data.city}',
-            );
-            debugPrint(
-              'Favorite memory: ${data.favoriteMemory}',
-            );
-            debugPrint(
-              'New photo: ${data.profileImage?.path}',
-            );
-            debugPrint(
-              'Remove photo: ${data.removeProfileImage}',
-            );
+            debugPrint('Profile saved: ${data.name}');
+            debugPrint('Partner: ${data.partnerName}');
+            debugPrint('Bio: ${data.bio}');
+            debugPrint('Relationship: ${data.relationshipLabel}');
+            debugPrint('Date: ${data.relationshipStartDate}');
+            debugPrint('City: ${data.city}');
+            debugPrint('Favorite memory: ${data.favoriteMemory}');
+            debugPrint('New photo: ${data.profileImage?.path}');
+            debugPrint('Remove photo: ${data.removeProfileImage}');
 
             // Later:
             // repository.updateProfile(data);
@@ -3178,43 +2980,27 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.relationship,
       builder: (context, state) {
         return RelationshipScreen(
           partnerName: 'Love',
           relationshipLabel: 'Together',
-          relationshipStartDate:
-          DateTime(2024, 2, 14),
-          firstMeetingDate:
-          DateTime(2024, 1, 20),
-          firstDate:
-          DateTime(2024, 2, 1),
+          relationshipStartDate: DateTime(2024, 2, 14),
+          firstMeetingDate: DateTime(2024, 1, 20),
+          firstDate: DateTime(2024, 2, 1),
           privateNote:
-          'We started with a simple hello and somehow built our little world from there.',
+              'We started with a simple hello and somehow built our little world from there.',
 
           onBack: () => context.pop(),
 
           onSave: (data) {
-            debugPrint(
-              'Partner: ${data.partnerName}',
-            );
-            debugPrint(
-              'Label: ${data.relationshipLabel}',
-            );
-            debugPrint(
-              'Relationship date: ${data.relationshipStartDate}',
-            );
-            debugPrint(
-              'First meeting: ${data.firstMeetingDate}',
-            );
-            debugPrint(
-              'First date: ${data.firstDate}',
-            );
-            debugPrint(
-              'Private note: ${data.privateNote}',
-            );
+            debugPrint('Partner: ${data.partnerName}');
+            debugPrint('Label: ${data.relationshipLabel}');
+            debugPrint('Relationship date: ${data.relationshipStartDate}');
+            debugPrint('First meeting: ${data.firstMeetingDate}');
+            debugPrint('First date: ${data.firstDate}');
+            debugPrint('Private note: ${data.privateNote}');
 
             // Later:
             // repository.updateRelationship(data);
@@ -3222,7 +3008,6 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.aboutSimi,
@@ -3234,15 +3019,11 @@ final GoRouter router = GoRouter(
           onBack: () => context.pop(),
 
           onPrivacy: () {
-            context.push(
-              AppRoutes.privacySecurity,
-            );
+            context.push(AppRoutes.privacySecurity);
           },
 
           onTerms: () {
-            context.push(
-              AppRoutes.termsOfService,
-            );
+            context.push(AppRoutes.termsOfService);
           },
 
           onFeedback: () {
@@ -3260,7 +3041,6 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.termsOfService,
       builder: (context, state) {
@@ -3270,9 +3050,7 @@ final GoRouter router = GoRouter(
           onBack: () => context.pop(),
 
           onPrivacy: () {
-            context.push(
-              AppRoutes.privacySecurity,
-            );
+            context.push(AppRoutes.privacySecurity);
           },
 
           onContact: () {
@@ -3282,7 +3060,6 @@ final GoRouter router = GoRouter(
       },
     ),
 
-
     GoRoute(
       path: AppRoutes.sendFeedback,
       builder: (context, state) {
@@ -3290,29 +3067,17 @@ final GoRouter router = GoRouter(
           onBack: () => context.pop(),
 
           onSubmit: (data) {
-            debugPrint(
-              'Feedback type: ${data.type}',
-            );
+            debugPrint('Feedback type: ${data.type}');
 
-            debugPrint(
-              'Rating: ${data.rating}',
-            );
+            debugPrint('Rating: ${data.rating}');
 
-            debugPrint(
-              'Message: ${data.message}',
-            );
+            debugPrint('Message: ${data.message}');
 
-            debugPrint(
-              'Details: ${data.details}',
-            );
+            debugPrint('Details: ${data.details}');
 
-            debugPrint(
-              'Email: ${data.email}',
-            );
+            debugPrint('Email: ${data.email}');
 
-            debugPrint(
-              'Attachment: ${data.attachment?.path}',
-            );
+            debugPrint('Attachment: ${data.attachment?.path}');
 
             // Later:
             // feedbackRepository.submit(data);
@@ -3320,7 +3085,6 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-
 
     GoRoute(
       path: AppRoutes.helpSupport,
@@ -3338,20 +3102,15 @@ final GoRouter router = GoRouter(
           },
 
           onReportProblem: () {
-            context.push(
-              AppRoutes.sendFeedback,
-            );
+            context.push(AppRoutes.sendFeedback);
           },
 
           onSendFeedback: () {
-            context.push(
-              AppRoutes.sendFeedback,
-            );
+            context.push(AppRoutes.sendFeedback);
           },
         );
       },
     ),
-
   ],
 );
 
