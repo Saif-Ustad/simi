@@ -56,7 +56,7 @@ class MoreScreen extends StatelessWidget {
                         title: 'Special Dates',
                         backgroundColor: const Color(0xFFE8E5F4),
                         onTap: () {
-                          debugPrint('Special Dates');
+                          context.push(AppRoutes.specialDates);
                         },
                       ),
                       _FeatureItem(

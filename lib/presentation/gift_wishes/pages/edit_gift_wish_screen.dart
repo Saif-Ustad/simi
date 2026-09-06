@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../core/config/theme/app_colors.dart';
-import '../../../core/config/theme/app_text_theme.dart';
+import '../../../../core/config/theme/app_colors.dart';
+import '../../../../core/config/theme/app_text_theme.dart';
 import 'gift_wishes_home_screen.dart';
+
 
 class EditGiftWishData {
   const EditGiftWishData({

@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/config/theme/app_colors.dart';
-import '../../../core/config/theme/app_text_theme.dart';
+import '../../../../core/config/theme/app_colors.dart';
+import '../../../../core/config/theme/app_text_theme.dart';
 
 /// ------------------------------------------------------------
 /// MODEL
@@ -868,160 +868,157 @@ class _GiftWishesHomeScreenState
               padding: const EdgeInsets.symmetric(
                 horizontal: 6,
               ),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: widget.onCreateWish,
-                  borderRadius: BorderRadius.circular(29),
-                  splashColor: Colors.white.withValues(
-                    alpha: 0.12,
-                  ),
-                  highlightColor: Colors.white.withValues(
-                    alpha: 0.06,
-                  ),
-                  child: Ink(
-                    height: 58,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color(0xFF765457),
-                          Color(0xFF966E72),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(29),
-                      border: Border.all(
-                        color: Colors.white.withValues(
-                          alpha: 0.15,
-                        ),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primary.withValues(
-                            alpha: 0.24,
-                          ),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
-                        ),
-                        BoxShadow(
-                          color: Colors.black.withValues(
-                            alpha: 0.08,
-                          ),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
+              child: GestureDetector(
+                onTap: widget.onCreateWish,
+                child: Container(
+                  height: 58,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color(0xFF765457),
+                        Color(0xFF966E72),
                       ],
                     ),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 7),
+                    borderRadius: BorderRadius.circular(29),
+                    border: Border.all(
+                      color: Colors.white.withValues(
+                        alpha: 0.15,
+                      ),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(
+                          alpha: 0.24,
+                        ),
+                        blurRadius: 20,
+                        offset: const Offset(0, 8),
+                      ),
+                      BoxShadow(
+                        color: Colors.black.withValues(
+                          alpha: 0.08,
+                        ),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 7),
 
-                        Container(
-                          width: 46,
-                          height: 46,
-                          decoration: BoxDecoration(
+                      // Add icon
+                      Container(
+                        width: 46,
+                        height: 46,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(
+                            alpha: 0.14,
+                          ),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white.withValues(
+                              alpha: 0.16,
+                            ),
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.add_rounded,
+                          size: 23,
+                          color: Colors.white,
+                        ),
+                      ),
+
+                      const SizedBox(width: 13),
+
+                      // Text
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment:
+                          MainAxisAlignment.center,
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Add a little wish',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style:
+                              GoogleFonts.playfairDisplay(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+
+                            const SizedBox(height: 3),
+
+                            Row(
+                              children: [
+                                Container(
+                                  width: 5,
+                                  height: 5,
+                                  decoration:
+                                  const BoxDecoration(
+                                    color: Color(0xFFF6D9DC),
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+
+                                const SizedBox(width: 6),
+
+                                Flexible(
+                                  child: Text(
+                                    'Something worth remembering',
+                                    maxLines: 1,
+                                    overflow:
+                                    TextOverflow.ellipsis,
+                                    style: AppTextTheme.labelSmall
+                                        .copyWith(
+                                      color: Colors.white
+                                          .withValues(
+                                        alpha: 0.72,
+                                      ),
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(width: 8),
+
+                      // Arrow
+                      Container(
+                        width: 42,
+                        height: 42,
+                        margin: const EdgeInsets.only(
+                          right: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(
+                            alpha: 0.12,
+                          ),
+                          shape: BoxShape.circle,
+                          border: Border.all(
                             color: Colors.white.withValues(
                               alpha: 0.14,
                             ),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.white.withValues(
-                                alpha: 0.16,
-                              ),
-                            ),
-                          ),
-                          child: const Icon(
-                            Icons.add_rounded,
-                            size: 23,
-                            color: Colors.white,
                           ),
                         ),
-
-                        const SizedBox(width: 13),
-
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment:
-                            MainAxisAlignment.center,
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Add a little wish',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style:
-                                GoogleFonts.playfairDisplay(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(height: 3),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 5,
-                                    height: 5,
-                                    decoration:
-                                    const BoxDecoration(
-                                      color: Color(0xFFF6D9DC),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Flexible(
-                                    child: Text(
-                                      'Something worth remembering',
-                                      maxLines: 1,
-                                      overflow:
-                                      TextOverflow.ellipsis,
-                                      style: AppTextTheme.labelSmall
-                                          .copyWith(
-                                        color: Colors.white
-                                            .withValues(
-                                          alpha: 0.72,
-                                        ),
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                        child: const Icon(
+                          Icons.arrow_forward_rounded,
+                          size: 19,
+                          color: Colors.white,
                         ),
+                      ),
 
-                        const SizedBox(width: 8),
-
-                        Container(
-                          width: 42,
-                          height: 42,
-                          margin: const EdgeInsets.only(
-                            right: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(
-                              alpha: 0.12,
-                            ),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.white.withValues(
-                                alpha: 0.14,
-                              ),
-                            ),
-                          ),
-                          child: const Icon(
-                            Icons.arrow_forward_rounded,
-                            size: 19,
-                            color: Colors.white,
-                          ),
-                        ),
-
-                        const SizedBox(width: 2),
-                      ],
-                    ),
+                      const SizedBox(width: 2),
+                    ],
                   ),
                 ),
               ),
