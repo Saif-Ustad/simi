@@ -29,12 +29,17 @@ import '../../../presentation/memories/pages/memory_detail_screen.dart';
 import '../../../presentation/mood_journal/pages/add_mood_entry_screen.dart';
 import '../../../presentation/mood_journal/pages/mood_entry_detail_screen.dart';
 import '../../../presentation/mood_journal/pages/mood_journal_home_screen.dart';
+import '../../../presentation/more/pages/about_simi_screen.dart';
 import '../../../presentation/more/pages/edit_profile_screen.dart';
+import '../../../presentation/more/pages/help_support_screen.dart';
 import '../../../presentation/more/pages/more_screen.dart';
 import '../../../presentation/more/pages/notifications_screen.dart';
 import '../../../presentation/more/pages/privacy_security_screen.dart';
 import '../../../presentation/more/pages/profile_screen.dart';
+import '../../../presentation/more/pages/relationship_screen.dart';
+import '../../../presentation/more/pages/send_feedback_screen.dart';
 import '../../../presentation/more/pages/settings_screen.dart';
+import '../../../presentation/more/pages/terms_of_service_screen.dart';
 import '../../../presentation/onboarding/pages/welcome_screen.dart';
 import '../../../presentation/onboarding/pages/story_start_date_screen.dart';
 import '../../../presentation/onboarding/pages/partner_names_screen.dart';
@@ -127,6 +132,11 @@ class AppRoutes {
   static const String notifications = '/notifications';
   static const String privacySecurity = '/privacy-security';
   static const String profile = '/profile';
+  static const String editProfile = '/profile/edit';
+  static const String relationship = '/settings/relationship';
+  static const String aboutSimi = '/settings/about';
+  static const String termsOfService = '/settings/terms';
+  static const String sendFeedback = '/settings/feedback';
 
 
   static const String privateVault = '/private-vault';
@@ -134,7 +144,8 @@ class AppRoutes {
   static const String addToPrivateVault = '/private-vault/add';
   static const String privateVaultItemDetail = '/private-vault/item-detail';
   static const String privateVaultSettings = '/private-vault/settings';
-  static const String editProfile = '/profile/edit';
+  static const String helpSupport = '/settings/help-support';
+
 
 
   static const String giftWishes = '/gift-wishes';
@@ -2871,7 +2882,9 @@ final GoRouter router = GoRouter(
           },
 
           onRelationship: () {
-            debugPrint('Relationship settings');
+            context.push(
+              AppRoutes.relationship,
+            );
           },
 
           onDataStorage: () {
@@ -2879,15 +2892,15 @@ final GoRouter router = GoRouter(
           },
 
           onAbout: () {
-            debugPrint('About SIMI');
+            context.push(AppRoutes.aboutSimi);
           },
 
           onHelp: () {
-            debugPrint('Help & support');
+            context.push(AppRoutes.helpSupport);
           },
 
           onFeedback: () {
-            debugPrint('Send feedback');
+            context.push(AppRoutes.sendFeedback);
           },
 
           onLogout: () {
@@ -3160,6 +3173,180 @@ final GoRouter router = GoRouter(
 
           onChangePhoto: () {
             debugPrint('Change profile photo');
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.relationship,
+      builder: (context, state) {
+        return RelationshipScreen(
+          partnerName: 'Love',
+          relationshipLabel: 'Together',
+          relationshipStartDate:
+          DateTime(2024, 2, 14),
+          firstMeetingDate:
+          DateTime(2024, 1, 20),
+          firstDate:
+          DateTime(2024, 2, 1),
+          privateNote:
+          'We started with a simple hello and somehow built our little world from there.',
+
+          onBack: () => context.pop(),
+
+          onSave: (data) {
+            debugPrint(
+              'Partner: ${data.partnerName}',
+            );
+            debugPrint(
+              'Label: ${data.relationshipLabel}',
+            );
+            debugPrint(
+              'Relationship date: ${data.relationshipStartDate}',
+            );
+            debugPrint(
+              'First meeting: ${data.firstMeetingDate}',
+            );
+            debugPrint(
+              'First date: ${data.firstDate}',
+            );
+            debugPrint(
+              'Private note: ${data.privateNote}',
+            );
+
+            // Later:
+            // repository.updateRelationship(data);
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.aboutSimi,
+      builder: (context, state) {
+        return AboutSimiScreen(
+          version: '1.0.0',
+          buildNumber: '1',
+
+          onBack: () => context.pop(),
+
+          onPrivacy: () {
+            context.push(
+              AppRoutes.privacySecurity,
+            );
+          },
+
+          onTerms: () {
+            context.push(
+              AppRoutes.termsOfService,
+            );
+          },
+
+          onFeedback: () {
+            context.push(AppRoutes.sendFeedback);
+          },
+
+          onLicenses: () {
+            showLicensePage(
+              context: context,
+              applicationName: 'SIMI ❤️',
+              applicationVersion: '1.0.0',
+            );
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.termsOfService,
+      builder: (context, state) {
+        return TermsOfServiceScreen(
+          lastUpdated: 'September 7, 2026',
+
+          onBack: () => context.pop(),
+
+          onPrivacy: () {
+            context.push(
+              AppRoutes.privacySecurity,
+            );
+          },
+
+          onContact: () {
+            debugPrint('Contact SIMI');
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.sendFeedback,
+      builder: (context, state) {
+        return SendFeedbackScreen(
+          onBack: () => context.pop(),
+
+          onSubmit: (data) {
+            debugPrint(
+              'Feedback type: ${data.type}',
+            );
+
+            debugPrint(
+              'Rating: ${data.rating}',
+            );
+
+            debugPrint(
+              'Message: ${data.message}',
+            );
+
+            debugPrint(
+              'Details: ${data.details}',
+            );
+
+            debugPrint(
+              'Email: ${data.email}',
+            );
+
+            debugPrint(
+              'Attachment: ${data.attachment?.path}',
+            );
+
+            // Later:
+            // feedbackRepository.submit(data);
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.helpSupport,
+      builder: (context, state) {
+        return HelpSupportScreen(
+          appVersion: '1.0.0',
+
+          onBack: () => context.pop(),
+
+          onContactSupport: () {
+            debugPrint('Contact SIMI support');
+
+            // Later:
+            // context.push(AppRoutes.contactSupport);
+          },
+
+          onReportProblem: () {
+            context.push(
+              AppRoutes.sendFeedback,
+            );
+          },
+
+          onSendFeedback: () {
+            context.push(
+              AppRoutes.sendFeedback,
+            );
           },
         );
       },

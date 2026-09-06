@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:simi/core/config/routes/router.dart';
 
 import '../../../core/config/theme/app_colors.dart';
 import '../../../core/config/theme/app_text_theme.dart';
@@ -752,10 +754,7 @@ class _SettingsScreenState extends State<SettingsScreen>
               subtitle:
               'The rules for using SIMI.',
               onTap: () {
-                _showComingSoon(
-                  context,
-                  'Terms of Service',
-                );
+                context.push(AppRoutes.termsOfService);
               },
               trailing: const _NavigationArrow(),
             ),
