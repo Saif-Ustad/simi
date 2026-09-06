@@ -64,7 +64,7 @@ class MoreScreen extends StatelessWidget {
                         title: 'Future Messages',
                         backgroundColor: const Color(0xFFE5E2F2),
                         onTap: () {
-                          debugPrint('Future Messages');
+                          context.push(AppRoutes.futureMessages);
                         },
                       ),
                     ]),
