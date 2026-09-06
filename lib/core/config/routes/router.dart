@@ -29,7 +29,12 @@ import '../../../presentation/memories/pages/memory_detail_screen.dart';
 import '../../../presentation/mood_journal/pages/add_mood_entry_screen.dart';
 import '../../../presentation/mood_journal/pages/mood_entry_detail_screen.dart';
 import '../../../presentation/mood_journal/pages/mood_journal_home_screen.dart';
+import '../../../presentation/more/pages/edit_profile_screen.dart';
 import '../../../presentation/more/pages/more_screen.dart';
+import '../../../presentation/more/pages/notifications_screen.dart';
+import '../../../presentation/more/pages/privacy_security_screen.dart';
+import '../../../presentation/more/pages/profile_screen.dart';
+import '../../../presentation/more/pages/settings_screen.dart';
 import '../../../presentation/onboarding/pages/welcome_screen.dart';
 import '../../../presentation/onboarding/pages/story_start_date_screen.dart';
 import '../../../presentation/onboarding/pages/partner_names_screen.dart';
@@ -57,6 +62,10 @@ import '../../../presentation/private_vault/pages/private_vault_settings_screen.
 import '../../../presentation/private_vault/pages/vault_add_item.dart';
 import '../../../presentation/private_vault/pages/vault_feature_screen.dart';
 import '../../../presentation/private_vault/pages/vault_item_detail_screen.dart';
+import '../../../presentation/simi_surprise/pages/simi_surprise_detail_screen.dart';
+import '../../../presentation/simi_surprise/pages/simi_surprise_me_screen.dart';
+import '../../../presentation/simi_surprise/pages/simi_surprises_home_screen.dart';
+import '../../../presentation/simi_surprise/pages/simi_surprises_settings_screen.dart';
 import '../../../presentation/special_date/pages/edit_special_date_screen.dart';
 import '../../../presentation/special_date/pages/special_date_countdown_screen.dart';
 import '../../../presentation/special_date/pages/special_date_date_screen.dart';
@@ -114,12 +123,19 @@ class AppRoutes {
   static const String chatDetails = '/chat/details';
 
   static const String more = '/more';
+  static const String settings = '/settings';
+  static const String notifications = '/notifications';
+  static const String privacySecurity = '/privacy-security';
+  static const String profile = '/profile';
+
 
   static const String privateVault = '/private-vault';
   static const String privateVaultFeature = '/private-vault/feature';
   static const String addToPrivateVault = '/private-vault/add';
   static const String privateVaultItemDetail = '/private-vault/item-detail';
   static const String privateVaultSettings = '/private-vault/settings';
+  static const String editProfile = '/profile/edit';
+
 
   static const String giftWishes = '/gift-wishes';
   static const String createGiftWish = '/gift-wishes/create';
@@ -158,6 +174,12 @@ class AppRoutes {
   static const String moodJournal = '/mood-journal';
   static const String moodEntryDetail = '/mood-journal/detail';
   static const String addMoodEntry = '/mood-journal/add';
+
+
+  static const String simiSurprises = '/simi-surprises';
+  static const String simiSurpriseDetail = '/simi-surprises/detail';
+  static const String simiSurprisesSettings = '/simi-surprises/settings';
+  static const String simiSurpriseMe = '/simi-surprises/surprise-me';
 
 }
 
@@ -2553,6 +2575,591 @@ final GoRouter router = GoRouter(
                 'date': date,
               },
             );
+          },
+        );
+      },
+    ),
+
+
+
+
+
+    GoRoute(
+      path: AppRoutes.simiSurprises,
+      builder: (context, state) {
+        final surprises = <SimiSurpriseItem>[
+          SimiSurpriseItem(
+            id: 'memory-1',
+            type: SimiSurpriseType.memory,
+            title: 'One year ago today',
+            message:
+            'You were in Goa together. '
+                'You saved 6 memories on this day.',
+            timeLabel: 'Today',
+            actionLabel: 'Relive this memory',
+            isNew: true,
+          ),
+
+          SimiSurpriseItem(
+            id: 'chat-1',
+            type: SimiSurpriseType.chat,
+            title: 'A little coincidence',
+            message:
+            'You mentioned Japan 4 times this month. '
+                'Maybe someone really wants to go. ✈️',
+            timeLabel: '18 min ago',
+            actionLabel: 'See your conversations',
+          ),
+
+          SimiSurpriseItem(
+            id: 'mood-1',
+            type: SimiSurpriseType.mood,
+            title: 'Something SIMI noticed',
+            message:
+            'You felt loved 3 times this week. '
+                'That feels like a nice little pattern.',
+            timeLabel: 'Today',
+            actionLabel: 'See your moods',
+          ),
+
+          SimiSurpriseItem(
+            id: 'date-1',
+            type: SimiSurpriseType.specialDate,
+            title: 'It\'s getting close',
+            message:
+            'Your first date is in 8 days. '
+                'Maybe it deserves a little something this year.',
+            timeLabel: '8 days away',
+            actionLabel: 'See special date',
+          ),
+
+          SimiSurpriseItem(
+            id: 'future-1',
+            type: SimiSurpriseType.futureMessage,
+            title: 'Someone from the past',
+            message:
+            'A message you wrote 30 days ago '
+                'is ready to be opened.',
+            timeLabel: 'Ready now',
+            actionLabel: 'Open your message',
+            isNew: true,
+          ),
+
+          SimiSurpriseItem(
+            id: 'period-1',
+            type: SimiSurpriseType.period,
+            title: 'Your rhythm',
+            message:
+            'Your next period may be approaching '
+                'in 4 days.',
+            timeLabel: '4 days away',
+            actionLabel: 'See your period',
+          ),
+
+          SimiSurpriseItem(
+            id: 'gift-1',
+            type: SimiSurpriseType.giftWish,
+            title: 'You might have forgotten this',
+            message:
+            'Those headphones have been sitting '
+                'in your wishes for 3 months.',
+            timeLabel: '3 months ago',
+            actionLabel: 'See the wish',
+          ),
+
+          SimiSurpriseItem(
+            id: 'milestone-1',
+            type: SimiSurpriseType.milestone,
+            title: 'You just reached 100 memories',
+            message:
+            '100 little pieces of your story, '
+                'all kept together.',
+            timeLabel: 'Just now',
+            actionLabel: 'Look through them',
+            isFeatured: true,
+          ),
+        ];
+
+        return SimiSurprisesHomeScreen(
+          surprises: surprises,
+          totalMoments: 128,
+
+          onSurpriseTap: (item) {
+            context.push(
+              AppRoutes.simiSurpriseDetail,
+              extra: item,
+            );
+          },
+
+          onSurpriseUs: () {
+            context.push(
+              AppRoutes.simiSurpriseMe,
+              extra: surprises,
+            );
+          },
+
+          onSettings: () {
+            context.push(AppRoutes.simiSurprisesSettings);
+          },
+
+          onSearch: (query) {
+            debugPrint(
+              'Search SIMI surprises: $query',
+            );
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.simiSurpriseDetail,
+      builder: (context, state) {
+        final surprise =
+        state.extra as SimiSurpriseItem;
+
+        return SimiSurpriseDetailScreen(
+          surprise: surprise,
+
+          onBack: () => context.pop(),
+
+          onOpenOriginal: () {
+            debugPrint(
+              'Open original: ${surprise.type}',
+            );
+
+            // Later we connect each type:
+            //
+            // Memory       → MemoryDetailScreen
+            // Chat         → LoveChatConversationScreen
+            // Period       → PeriodHomeScreen
+            // Special Date → SpecialDateDetailScreen
+            // Future Msg   → FutureMessageDetailScreen
+            // Mood         → MoodEntryDetailScreen
+            // Gift Wish    → GiftWishDetailScreen
+          },
+
+          onFavorite: () {
+            debugPrint(
+              'Favorite surprise: ${surprise.id}',
+            );
+          },
+
+          onDismiss: () {
+            debugPrint(
+              'Dismiss surprise: ${surprise.id}',
+            );
+            context.pop();
+          },
+        );
+      },
+    ),
+
+
+
+    GoRoute(
+      path: AppRoutes.simiSurprisesSettings,
+      builder: (context, state) {
+        return SimiSurprisesSettingsScreen(
+          surprisesEnabled: true,
+
+          memoriesEnabled: true,
+          chatEnabled: true,
+          periodEnabled: true,
+          specialDatesEnabled: true,
+          futureMessagesEnabled: true,
+          moodJournalEnabled: true,
+          giftWishesEnabled: true,
+
+          notificationEnabled: true,
+
+          onBack: () => context.pop(),
+
+          onSurprisesChanged: (value) {
+            debugPrint('SIMI Surprises: $value');
+          },
+
+          onMemoriesChanged: (value) {
+            debugPrint('Memory surprises: $value');
+          },
+
+          onChatChanged: (value) {
+            debugPrint('Chat surprises: $value');
+          },
+
+          onPeriodChanged: (value) {
+            debugPrint('Period surprises: $value');
+          },
+
+          onSpecialDatesChanged: (value) {
+            debugPrint('Special date surprises: $value');
+          },
+
+          onFutureMessagesChanged: (value) {
+            debugPrint('Future message surprises: $value');
+          },
+
+          onMoodJournalChanged: (value) {
+            debugPrint('Mood surprises: $value');
+          },
+
+          onGiftWishesChanged: (value) {
+            debugPrint('Gift wish surprises: $value');
+          },
+
+          onNotificationChanged: (value) {
+            debugPrint('Surprise notifications: $value');
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.simiSurpriseMe,
+      builder: (context, state) {
+        final surprises =
+        state.extra as List<SimiSurpriseItem>;
+
+        return SimiSurpriseMeScreen(
+          surprises: surprises,
+
+          onBack: () => context.pop(),
+
+          onOpenSurprise: (surprise) {
+            context.push(
+              AppRoutes.simiSurpriseDetail,
+              extra: surprise,
+            );
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.settings,
+      builder: (context, state) {
+        return SettingsScreen(
+          userName: 'You',
+          partnerName: 'Love',
+          userInitial: 'Y',
+          partnerInitial: 'L',
+
+          onBack: () {
+            context.pop();
+          },
+
+          onProfile: () {
+            context.push(AppRoutes.profile);
+          },
+
+          onNotifications: () {
+            context.push(
+              AppRoutes.notifications,
+            );
+          },
+
+          onPrivacySecurity: () {
+            context.push(
+              AppRoutes.privacySecurity,
+            );
+          },
+
+          onAppearance: () {
+            debugPrint('Appearance');
+          },
+
+          onRelationship: () {
+            debugPrint('Relationship settings');
+          },
+
+          onDataStorage: () {
+            debugPrint('Data & storage');
+          },
+
+          onAbout: () {
+            debugPrint('About SIMI');
+          },
+
+          onHelp: () {
+            debugPrint('Help & support');
+          },
+
+          onFeedback: () {
+            debugPrint('Send feedback');
+          },
+
+          onLogout: () {
+            debugPrint('Logout');
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.notifications,
+      builder: (context, state) {
+        return NotificationsScreen(
+          notificationsEnabled: true,
+
+          loveMessages: true,
+          specialDates: true,
+          memories: true,
+          futureMessages: true,
+          moodUpdates: true,
+          giftWishes: true,
+          simiSurprises: true,
+
+          notificationPreview: true,
+          sound: true,
+          vibration: true,
+
+          onBack: () => context.pop(),
+
+          onNotificationsChanged: (value) {
+            debugPrint(
+              'Notifications: $value',
+            );
+          },
+
+          onLoveMessagesChanged: (value) {
+            debugPrint(
+              'Love messages: $value',
+            );
+          },
+
+          onSpecialDatesChanged: (value) {
+            debugPrint(
+              'Special dates: $value',
+            );
+          },
+
+          onMemoriesChanged: (value) {
+            debugPrint(
+              'Memories notifications: $value',
+            );
+          },
+
+          onFutureMessagesChanged: (value) {
+            debugPrint(
+              'Future message notifications: $value',
+            );
+          },
+
+          onMoodUpdatesChanged: (value) {
+            debugPrint(
+              'Mood notifications: $value',
+            );
+          },
+
+          onGiftWishesChanged: (value) {
+            debugPrint(
+              'Gift wish notifications: $value',
+            );
+          },
+
+          onSimiSurprisesChanged: (value) {
+            debugPrint(
+              'SIMI Surprises: $value',
+            );
+          },
+
+          onPreviewChanged: (value) {
+            debugPrint(
+              'Notification preview: $value',
+            );
+          },
+
+          onSoundChanged: (value) {
+            debugPrint(
+              'Notification sound: $value',
+            );
+          },
+
+          onVibrationChanged: (value) {
+            debugPrint(
+              'Notification vibration: $value',
+            );
+          },
+        );
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.privacySecurity,
+      builder: (context, state) {
+        return PrivacySecurityScreen(
+          appLockEnabled: true,
+          biometricEnabled: true,
+          hideNotificationPreviews: true,
+          appSwitcherPrivacy: true,
+          screenshotProtection: true,
+          privateContentEnabled: true,
+          analyticsEnabled: false,
+          crashReportsEnabled: true,
+
+          onBack: () => context.pop(),
+
+          onAppLockChanged: (value) {
+            debugPrint(
+              'App lock: $value',
+            );
+          },
+
+          onBiometricChanged: (value) {
+            debugPrint(
+              'Biometric: $value',
+            );
+          },
+
+          onNotificationPreviewChanged: (value) {
+            debugPrint(
+              'Hide notification previews: $value',
+            );
+          },
+
+          onAppSwitcherPrivacyChanged: (value) {
+            debugPrint(
+              'App switcher privacy: $value',
+            );
+          },
+
+          onScreenshotProtectionChanged: (value) {
+            debugPrint(
+              'Screenshot protection: $value',
+            );
+          },
+
+          onPrivateContentChanged: (value) {
+            debugPrint(
+              'Private content: $value',
+            );
+          },
+
+          onAnalyticsChanged: (value) {
+            debugPrint(
+              'Analytics: $value',
+            );
+          },
+
+          onCrashReportsChanged: (value) {
+            debugPrint(
+              'Crash reports: $value',
+            );
+          },
+
+          onChangePin: () {
+            debugPrint('Change PIN');
+          },
+
+          onManagePrivateContent: () {
+            debugPrint(
+              'Manage private content',
+            );
+          },
+
+          onExportData: () {
+            debugPrint('Export SIMI data');
+          },
+
+          onDeleteAccount: () {
+            debugPrint('Delete SIMI data');
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.profile,
+      builder: (context, state) {
+        return ProfileScreen(
+          name: 'Saif',
+          partnerName: 'Love',
+          initial: 'S',
+          bio: 'A little corner of the world, just for us.',
+          relationshipLabel: 'Together',
+          relationshipStartDate: DateTime(2024, 2, 14),
+          city: 'Mumbai',
+          favoriteMemory: 'Our first trip together',
+          memoriesCount: 24,
+          specialDatesCount: 6,
+          giftWishesCount: 8,
+          photosCount: 42,
+
+          onBack: () => context.pop(),
+
+          onEditProfile: () {
+            context.push(
+              AppRoutes.editProfile,
+            );
+          },
+
+          onChangePhoto: () {
+            debugPrint('Change profile photo');
+          },
+
+          onRelationshipTap: () {
+            debugPrint('Relationship details');
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.editProfile,
+      builder: (context, state) {
+        return EditProfileScreen(
+          name: 'Saif',
+          partnerName: 'Love',
+          bio: 'A little corner of the world, just for us.',
+          relationshipLabel: 'Together',
+          relationshipStartDate:
+          DateTime(2024, 2, 14),
+          city: 'Mumbai',
+          favoriteMemory:
+          'Our first trip together',
+
+          onBack: () => context.pop(),
+
+          onSave: (data) {
+            debugPrint(
+              'Profile saved: ${data.name}',
+            );
+            debugPrint(
+              'Partner: ${data.partnerName}',
+            );
+            debugPrint(
+              'Bio: ${data.bio}',
+            );
+            debugPrint(
+              'Relationship: ${data.relationshipLabel}',
+            );
+            debugPrint(
+              'Date: ${data.relationshipStartDate}',
+            );
+            debugPrint(
+              'City: ${data.city}',
+            );
+            debugPrint(
+              'Favorite memory: ${data.favoriteMemory}',
+            );
+            debugPrint(
+              'New photo: ${data.profileImage?.path}',
+            );
+            debugPrint(
+              'Remove photo: ${data.removeProfileImage}',
+            );
+
+            // Later:
+            // repository.updateProfile(data);
+          },
+
+          onChangePhoto: () {
+            debugPrint('Change profile photo');
           },
         );
       },

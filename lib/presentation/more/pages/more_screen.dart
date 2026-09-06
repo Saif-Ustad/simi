@@ -130,10 +130,12 @@ class MoreScreen extends StatelessWidget {
                     _buildFeatureGroup([
                       _FeatureItem(
                         icon: Icons.favorite_border_rounded,
-                        title: 'Love Notifications',
+                        title: 'SIMI Surprises',
                         backgroundColor: const Color(0xFFF6E8EA),
                         onTap: () {
-                          debugPrint('Love Notifications');
+                          context.push(
+                            AppRoutes.simiSurprises,
+                          );
                         },
                       ),
                       _FeatureItem(
@@ -161,7 +163,9 @@ class MoreScreen extends StatelessWidget {
                         title: 'Settings',
                         backgroundColor: const Color(0xFFEDE9E6),
                         onTap: () {
-                          debugPrint('Settings');
+                          context.push(
+                            AppRoutes.settings,
+                          );
                         },
                       ),
                       _FeatureItem(
@@ -169,7 +173,9 @@ class MoreScreen extends StatelessWidget {
                         title: 'Notifications',
                         backgroundColor: const Color(0xFFEDE9E6),
                         onTap: () {
-                          debugPrint('Notifications');
+                          context.push(
+                            AppRoutes.notifications,
+                          );
                         },
                       ),
                       _FeatureItem(
@@ -177,7 +183,9 @@ class MoreScreen extends StatelessWidget {
                         title: 'Privacy & Security',
                         backgroundColor: const Color(0xFFEDE9E6),
                         onTap: () {
-                          debugPrint('Privacy & Security');
+                          context.push(
+                            AppRoutes.privacySecurity,
+                          );
                         },
                       ),
                     ]),
