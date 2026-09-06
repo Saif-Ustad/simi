@@ -26,6 +26,9 @@ import '../../../presentation/memories/pages/create_memory_screen.dart';
 import '../../../presentation/memories/pages/edit_memory_screen.dart';
 import '../../../presentation/memories/pages/memories_screen.dart';
 import '../../../presentation/memories/pages/memory_detail_screen.dart';
+import '../../../presentation/mood_journal/pages/add_mood_entry_screen.dart';
+import '../../../presentation/mood_journal/pages/mood_entry_detail_screen.dart';
+import '../../../presentation/mood_journal/pages/mood_journal_home_screen.dart';
 import '../../../presentation/more/pages/more_screen.dart';
 import '../../../presentation/onboarding/pages/welcome_screen.dart';
 import '../../../presentation/onboarding/pages/story_start_date_screen.dart';
@@ -150,6 +153,11 @@ class AppRoutes {
   static const String futureMessageEdit = '/future-messages/edit';
   static const String futureMessageSettings = '/future-messages/settings';
   static const String futureMessageOpen = '/future-messages/open';
+
+
+  static const String moodJournal = '/mood-journal';
+  static const String moodEntryDetail = '/mood-journal/detail';
+  static const String addMoodEntry = '/mood-journal/add';
 
 }
 
@@ -2394,6 +2402,156 @@ final GoRouter router = GoRouter(
           onClearAttachments: () {
             debugPrint(
               'Clear future message attachments',
+            );
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.moodJournal,
+      builder: (context, state) {
+        final moods = <MoodEntry>[
+          MoodEntry(
+            date: DateTime.now(),
+            mood: MoodType.loved,
+            note: 'Feeling really close to you today ❤️',
+            isShared: true, intensity: 0,
+          ),
+          MoodEntry(
+            date: DateTime.now().subtract(
+              const Duration(days: 1),
+            ),
+            mood: MoodType.calm,
+            note: 'A peaceful day.', intensity: 0,
+          ),
+          MoodEntry(
+            date: DateTime.now().subtract(
+              const Duration(days: 2),
+            ),
+            mood: MoodType.happy,
+            note: 'Had such a good day.', intensity: 0,
+          ),
+          MoodEntry(
+            date: DateTime.now().subtract(
+              const Duration(days: 4),
+            ),
+            mood: MoodType.loved,
+            note: 'Missing you a little extra.', intensity: 0,
+          ),
+          MoodEntry(
+            date: DateTime.now().subtract(
+              const Duration(days: 6),
+            ),
+            mood: MoodType.tired, intensity: 0,
+          ),
+          MoodEntry(
+            date: DateTime.now().subtract(
+              const Duration(days: 8),
+            ),
+            mood: MoodType.happy, intensity: 0,
+          ),
+        ];
+
+        return MoodJournalHomeScreen(
+          entries: moods,
+
+          onDateTap: (date) {
+            MoodEntry? selectedEntry;
+
+            for (final mood in moods) {
+              if (mood.date.year == date.year &&
+                  mood.date.month == date.month &&
+                  mood.date.day == date.day) {
+                selectedEntry = mood;
+                break;
+              }
+            }
+
+            context.push(
+              AppRoutes.moodEntryDetail,
+              extra: {
+                'date': date,
+                'entry': selectedEntry,
+              },
+            );
+          },
+
+          onAddMood: () {
+            context.push(
+              AppRoutes.addMoodEntry,
+            );
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.addMoodEntry,
+      builder: (context, state) {
+        return AddMoodEntryScreen(
+          onBack: () => context.pop(),
+
+          onSave: (data) {
+            debugPrint('Mood: ${data.mood}');
+            debugPrint('Date: ${data.date}');
+            debugPrint('Intensity: ${data.intensity}');
+            debugPrint('Note: ${data.note}');
+            debugPrint('Shared: ${data.isShared}');
+
+            context.pop();
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: AppRoutes.moodEntryDetail,
+      builder: (context, state) {
+        final data =
+        state.extra as Map<String, dynamic>;
+
+        final date =
+        data['date'] as DateTime;
+
+        final entry =
+        data['entry'] as MoodEntry?;
+
+        return MoodEntryDetailScreen(
+          date: date,
+          entry: entry,
+
+          onBack: () {
+            context.pop();
+          },
+
+          onEdit: () {
+            context.push(
+              AppRoutes.addMoodEntry,
+              extra: {
+                'date': date,
+                'entry': entry,
+              },
+            );
+          },
+
+          onDelete: () {
+            debugPrint(
+              'Delete mood entry: $date',
+            );
+
+            context.pop();
+          },
+
+          onAddMood: () {
+            context.push(
+              AppRoutes.addMoodEntry,
+              extra: {
+                'date': date,
+              },
             );
           },
         );

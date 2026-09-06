@@ -84,7 +84,7 @@ class MoreScreen extends StatelessWidget {
                         title: 'Mood Journal',
                         backgroundColor: const Color(0xFFF5F5F5),
                         onTap: () {
-                          debugPrint('Mood Journal');
+                          context.push(AppRoutes.moodJournal);
                         },
                       ),
                       _FeatureItem(
